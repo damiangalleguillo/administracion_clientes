@@ -1,0 +1,603 @@
+/*base*/
+body{
+	margin:0;
+	background-color: rgb(50, 50, 50);
+}
+/*fin base*/
+
+/*botones*/
+button, input[type=submit], input[type=reset]{
+	background-color: rgb(240, 240, 240);
+	border: solid 1px gray;
+	padding: 5px;	
+	font-size: 12;
+	font-family: sans-serif;	
+	min-width: 100px;
+}
+
+button:hover, input[type=submit]:hover, input[type=reset]:hover{
+	background-color: rgb(229, 241, 251);
+	border: solid 1px rgb(0, 120, 215);
+}
+
+button:focus, input[type=submit]:focus, input[type=reset]:focus{
+	border: solid 2px rgb(0, 120, 215);
+}
+
+/*fin botones*/
+
+/*tablas (grillas)*/
+table{
+	border-collapse: collapse; 
+	width: 100%;
+	background-color: rgb(240, 240, 240);
+	font-family: sans-serif;
+	font-size: 12;		 
+	border: black 1px solid;
+}
+
+th{
+	background-color: rgb(240, 240, 240);
+	font-weight: normal;
+	border: solid 1px black;
+	margin:0;
+	color:black;
+}
+
+td{
+	background-color: transparent;
+	border: solid 1px rgb(240, 240, 240);
+	max-height:10px;
+}
+
+tr{
+	background-color: white;	
+	height: 20px;
+}
+
+tbody {
+  display: block;  
+  overflow: hidden;
+  overflow-y: scroll;  
+}
+
+table thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr:hover{
+	background-color: rgb(0, 120, 215);
+	color: white;
+}
+
+.seleccionado{
+	background-color: rgb(0, 120, 215);
+	color: white;
+}
+
+td input, td select{
+	width: 100%;
+}
+
+/*fin tablas (grillas)*/
+
+
+/*cuadros de texto*/
+input[type=text], input[type=password], input[type=number], input[type=date], select{
+	border:solid 1px black;
+	font-family: sans-serif;
+	height:25px;
+}
+
+input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=date]:hover, select:hover{
+	border:solid 1px rgb(0, 120, 215);
+}
+
+/*fin cuadros de texto*/
+
+/*marcos*/
+fieldset{
+	background-color: rgb(240, 240, 240);
+	margin: 0 5% 10px 5%;
+}
+
+fieldset > legend{
+	text-align: left;
+}
+/*fin marcos*/
+
+/*ventana*/
+.ventana{	
+	background-color: rgb(240, 240, 240);
+	border: solid 8px rgb(0, 120, 215);
+	border-top: none;
+	text-align: center;
+	position: absolute;
+	top: -1000px;
+	left: 20%;
+	right: 20%;
+	height:auto;
+	transform: scale(0.1);
+	transition: all 2s ;
+	min-height: 100px;
+}
+
+.estatica{
+	top:5px;
+	transform: scale(1);	
+}
+
+.visible{
+	top:5px;
+	transform: scale(1);
+	z-index:10;
+}
+
+.bntCerrar{
+	background-image: url('cerrar.png');
+	background-repeat:no-repeat;
+	width: 47px;
+	height: 31px;
+	display:block;
+	float:right;
+	cursor: pointer;
+}
+
+.ventana-grupo{
+	text-align: left;	
+	width: 96%;
+	margin: 0 0 0 2%;
+	column-gap: 5px;		
+}
+
+.col2{ column-count: 2;}
+.col3{ column-count: 3;}
+.col4{ column-count: 4;}
+.col5{ column-count: 5;}
+.col6{ column-count: 6;}
+.col7{ column-count: 7;}
+.col8{ column-count: 8;}
+.col9{ column-count: 9;}
+.col10{ column-count: 10;}
+.col11{ column-count: 11;}
+.col12{ column-count: 12;}
+
+
+.ventana-fila{
+	display: flex; 
+	flex-wrap: no-wrap; 
+	flex-direction: row;	
+	height: 30px;
+} 
+
+.ventana-fila input[type=text],
+.ventana-fila input[type=password], 
+.ventana-fila input[type=number],
+.ventana-fila input[type=date],
+.ventana-fila select{
+	width: 100%;
+	margin-right: 2px;
+	margin-top: 3px;
+}
+
+.ventana-fila label{
+	width: auto!important;
+	margin-top: 3px;
+}
+
+.ventana-grupo > label{	
+	margin-bottom: 0!important;
+}
+
+.ventana-grupo > input[type=text],
+.ventana-grupo > input[type=password], 
+.ventana-grupo > input[type=number],
+.ventana-grupo > input[type=date],
+.ventana-grupo > select, 
+.ventana-grupo > label{
+	display: inline-block;
+	margin-left: 0;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+ul[class=checklist]{
+	
+}
+
+.ventana > form > label, 
+.ventana > form > input[type=text], 
+.ventana > form > input[type=password], 
+.ventana > form > input[type=number], 
+.ventana > form > input[type=date], 
+.ventana > form > select,
+.ventana > form > div[class=checklist]{
+	display: block;
+	width: 90%;
+	margin-left: 5%;
+	margin-bottom: 10px;
+}
+
+.ventana > form > label{
+	text-align: left;
+	margin-bottom: 0;
+}
+
+.ventana > form > button, 
+.ventana > form > input[type=submit], 
+.ventana > form > input[type=reset]{
+	width: 80px;
+	display: inline-block;
+}
+
+.ventana fieldset > label, 
+.ventana fieldset > input[type=text], 
+.ventana fieldset > input[type=password], 
+.ventana fieldset > input[type=number], 
+.ventana fieldset > input[type=date], 
+.ventana fieldset > select,
+.ventana fieldset > div[class=checklist]{
+	display: block;
+	width: 96%;
+	margin-left: 2%;
+	margin-bottom: 5px;
+}
+
+.ventana fieldset > label{
+	text-align: left;
+	margin-bottom: 0;
+}
+
+.ventana fieldset > button, 
+.ventana fieldset > input[type=submit], 
+.ventana fieldset > input[type=reset]{
+	width: 80px;
+	display: inline-block;
+}
+
+.ventana-titulo{
+	text-align: left;
+	display: block;
+	height: 31px;
+	width: 100%;		
+	background-color: rgb(0, 120, 215);
+	color: white;
+	font-family: sans-serif;
+	font-size: 16;
+	margin-bottom:10px;
+	font-weight: bold;
+	line-height: 25px;
+}
+
+.ventana-botonera{
+	display: block; 
+	position: relative; 
+	margin-top: 10px;
+	bottom: 5; 
+	left: 0; 
+	right: 0; 
+	text-align: center;
+}
+
+.ventana-fondo{
+	position: absolute;	
+	/*background-image: url('loading.gif');*/
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: black;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	opacity: .5;
+	display: none;
+}
+
+.dialogo-icono{
+	position: absolute;
+	background-repeat: no-repeat;	
+	background-position: center;
+	float: left;
+	width: 60px;
+	top: 30;	
+	bottom: 0;
+}
+
+.dialogo-tipo0{
+	background-image: url('errorDialog.png');
+}
+
+.dialogo-tipo1{
+	background-image: url('alertDialog.png');		
+}
+
+.dialogo-tipo2{
+	background-image: url('infoDialog.png');
+}
+
+.dialogo-tipo3{
+	background-image: url('questDialog.png');
+}
+
+.dialogo-mensaje{
+	font-family: sans-serif;
+	display:block;
+	margin-bottom: 10;
+	margin-left: 60px;
+	text-align: left;	
+}
+
+/*fin ventana*/
+
+/*barras*/
+@media screen and (max-width: 600px) {
+  .menuopciones, .menuusuario{	  
+	  font-size: 16 !important; 
+	  position: absolute;
+	  top: 50;
+	  right: 0;
+	  left: 0;
+	  bottom: 0;
+  }
+  
+  .btnUsuario{
+	  line-height: 60px;
+  }
+  
+  .ventana{
+	  left:0;
+	  right:0;
+  }
+  
+  .ventana-grupo{
+	  column-count:1!important;
+  }
+  
+  .ventana-botonera{
+	  width: 34px;
+	  height: 34px;
+	  margin-left: 45%;
+	  bottom: 2;
+	  border-radius: 50%;
+	  border: 1px solid gray;
+	  background-image: url('menu.png'); 
+	  background-repeat: no-repeat;
+  }
+  
+  .ventana-botonera:hover{	  
+	  width: 50%;
+	  background-image: none;
+	  height: 100%;
+	  margin-left: 25%;
+	  border-radius: 0;
+	  border: initial;
+	  padding-top: 50px;
+	  transition: all, transform 2s;
+  }
+  
+  .ventana-botonera:hover button{
+	  display: block;
+  }
+  
+  .ventana-botonera button{
+	  width: 100%;
+	  display: none;
+  }
+  
+}
+
+.menubar{
+	background-color: rgb(60, 60, 60);
+	display: block;
+	height: 50px;
+	width: 100%;
+}
+
+.btnInicio{
+	display: inline-block;
+	height: 50px;
+	width: 50px;	
+	background-image: url('home.png');
+}
+
+.btnInicio:hover{
+	background-color: rgb(101, 101, 101);
+	background-image: url('homehover.png');
+}
+
+.btnInicio:hover ~ .menuopciones, .menuopciones:hover {
+  display: block;
+}
+
+.btnUsuario{
+	display: inline-block;
+	float: right;
+	height: 50px;
+	font-family: segoe ui;
+	font-size: 16;
+	line-height: 50px;
+	color: white;
+	text-indent: 5px;
+	text-decoration: none;
+	text-align: right;
+	min-width: 50px;
+	background-image: url('usuario.png');
+	background-repeat: no-repeat;
+	background-position: right;
+	padding-right: 50px;
+}
+
+.menuusuario{
+	right: 0;
+}
+
+.usrexit{
+	background-image: url('usrexit.png')!important;
+}
+
+.usrconfig{
+	background-image: url('usrconfig.png')!important;
+}
+
+.menuopciones, .menuusuario{
+	font-family: segoe ui;
+	font-size: 11;
+	display: none;
+	position: absolute;
+	background-color: rgb(60, 60, 60);
+	min-width: 200px;
+	z-index: 1;
+}
+
+.menuopciones hr, .menuusuario hr{
+	border: 1px solid gray;
+}
+ 
+.menuopciones a, .menuusuario a{
+  background-image: url('opcion.png');
+  background-repeat: no-repeat;
+  background-position: left;
+  text-indent: 32px;
+  color: white;
+  height: 38px;
+  line-height: 38px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  padding: 5px 0 0 5px;
+}
+
+.menuopciones a:hover, .menuusuario a:hover{
+  background-color: rgb(101, 101, 101);
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  height: 36px;
+  border: 1px solid gray;
+  border-left: none;
+  border-right: none;
+}
+
+.btnUsuario:hover{
+	background-color: rgb(101, 101, 101);
+} 
+
+.btnUsuario:hover ~ .menuusuario, .menuusuario:hover {
+  display: block;  
+}
+.contenido{
+	
+	
+}
+
+/*fin barras*/
+
+/*checklist*/
+.checklist{	
+	border: 1px solid black; 
+	list-style-type: none;
+	background-color: white;
+	text-align:left;
+}
+
+.checklist label{
+	display: block;
+	width: 100%;
+	margin: 0;
+}
+
+.checklist label:hover{
+	background-color: rgb(0, 120, 215);
+}
+
+/*fin cheklist*/
+
+/*botones metro*/
+#opcion-contenedor{
+	position: relative;
+	top: 20px;
+	text-align: center;
+}
+
+.opcion{
+	text-align: left;
+	text-decoration: none;
+	min-width: 120px;
+	min-height: 120px;
+	display: inline-block;	
+	margin-left: 2px;
+	margin-bottom: 6px;
+	font-family: arial;
+}
+
+.opcion.doble{
+	min-width: 246px;
+}
+
+.opcion span{
+	font-size: 14;
+	color: white;
+	position: relative;
+	top: 100;
+	bottom: 0px;
+	left: 15px;	
+}
+
+.opcion.verde{
+	background-image: linear-gradient(to right, rgb(1, 135, 2), rgb(0, 166, 0));
+}
+
+.opcion.morado{
+	background-image: linear-gradient(to right, rgb(82, 52, 174), rgb(133, 101, 207));
+}
+
+.opcion.azul{
+	background-image: linear-gradient(to right, rgb(1, 96, 165), rgb(3, 142, 211));
+}
+
+.opcion.naranja{
+	background-image: linear-gradient(to right, rgb(205, 44, 10), rgb(245, 69, 32));
+}
+
+.opcion.verdeclaro{
+	background-image: linear-gradient(to right, rgb(75, 151, 14), rgb(100, 189, 13));
+}
+
+.opcion.magenta{
+	background-image: linear-gradient(to right, rgb(200, 19, 62), rgb(235, 41, 85));
+}
+
+.opcion.amarillo{
+	background-image: linear-gradient(to right, rgb(215, 204, 0), rgb(255, 255, 0));
+}
+
+.opcion.rojo{
+	background-image: linear-gradient(to right, rgb(192, 0, 0), rgb(255, 0, 0));
+}
+
+.opcion.azulw10{
+	background-image: linear-gradient(to right, rgb(0, 120, 215), rgb(64, 169, 255));
+}
+
+.opcion:hover{
+	border: 2px solid rgb(129, 188, 235);
+	min-width: 116px;
+	min-height: 116px;
+}
+
+.opcion.doble:hover{
+	min-width: 242px!important;
+}
+
+.opcion .img{		
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: contain; 
+	display: block;
+	width: 100%;
+	height: 100px;
+}
+/*fin botones metro*/
+

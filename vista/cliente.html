@@ -1,0 +1,54 @@
+<div class="ventana estatica" style="margin-top:50px" data-onclick="window.location = ''">
+	<div class="ventana-titulo">Clientes</div>	
+		<form action="cliente" method="get">						
+			<div class="ventana-grupo ventana-fila">
+				<input type="text" name="busqueda" id="busqueda"><button>Buscar</button>				
+			</div>
+		</form>
+	<fieldset>
+	<legend>Clientes</legend>
+	<table style="height: 250px">
+		<thead><tr><th>DNI</th><th>Nombre</th></tr></thead>
+		<tbody>{{clientesList}}</tbody>
+		<tfoot></tfoot>
+	</table>
+	</fieldset>
+	<div class="ventana-botonera">
+		<button onclick="mostrar('abmclientes')">Agregar</button>
+		<button>Eliminar</button>
+		<button onclick="mostrar('abmclientes')">Modificar</button>
+		<button onclick="mostrar('listadoproyectos')">Proyectos</button>
+	</div>
+</div>
+
+<div id="abmclientes" class="ventana">
+	<div class="ventana-titulo">Administrar Clientes</div>
+	<form action="cliente/guardar" method="post">
+		<label>DNI</label>
+		<input type="number" name="dni" id="DNI">
+		<label>Apellido</label>
+		<input type="text" name="apellido" id="APELLIDO">
+		<label>Nombres</label>
+		<input type="text" name="nombres" id="NOMBRES">
+		<div class="ventana-botonera">
+			<button>Aceptar</button>
+			<button type="reset">Cancelar</button>
+		</div>
+	</form>
+</div>
+
+<div id="listadoproyectos" class="ventana">
+	<div class="ventana-titulo">Proyectos de Clientes</div>
+	<fieldset>
+	<legend>Proyectos</legend>
+	<table style="height: 250px">
+		<thead><tr><th>Fecha</th><th>Nombre</th></tr></thead>
+		<tbody></tbody>
+		<tfoot></tfoot>
+	</table>
+	</fieldset>
+	<div class="ventana-botonera">
+		<button>Nuevo</button>
+		<button onclick="ocultar('listadoproyectos')">Salir</button>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<div class="ventana estatica" style="margin-top:50px" data-onclick="window.location = ''">
+	<div class="ventana-titulo">Proyectos</div>	
+		<form action="proyecto" method="get">						
+			<div class="ventana-grupo ventana-fila">
+				<input type="text" name="busqueda" id="busqueda"><button>Buscar</button>				
+			</div>
+		</form>
+	<fieldset>
+	<legend>Proyectos</legend>
+	<table style="height: 250px">
+		<thead><tr><th>Fecha</th><th>Nombre</th><th>Cliente</th></tr></thead>
+		<tbody></tbody>
+		<tfoot></tfoot>
+	</table>
+	</fieldset>
+	<div class="ventana-botonera">
+		<button onclick="mostrar('abmproyecto')">Agregar</button>
+		<button>Eliminar</button>
+		<button onclick="mostrar('abmproyecto')">Modificar</button>
+		<button onclick="mostrar('listadoproyectos')">Proyectos</button>
+	</div>
+</div>
+
+<div id="abmproyecto" class="ventana">
+	<div class="ventana-titulo">Administrar Proyectos</div>
+	<form action="cliente/guardar" method="post">
+		<label>Fecha</label>
+		<input type="date" name="fecha" id="FECHA">		
+		<label>Nombre</label>
+		<input type="text" name="nombre" id="NOMBRE">
+		<div class="ventana-botonera">
+			<button>Aceptar</button>
+			<button type="reset">Cancelar</button>
+		</div>
+	</form>
+</div>

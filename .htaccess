@@ -1,0 +1,11 @@
+Options -MultiViews
+Options -Indexes
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
+<FilesMatch "\.(htaccess|ini)$">
+ Order Allow,Deny
+ Deny from all
+</FilesMatch>

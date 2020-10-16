@@ -1,0 +1,33 @@
+<html>	
+	<head>		
+		<script type="text/javascript" src="nucleo/scripts/utils.js"></script>
+		<script type="text/javascript" src="nucleo/scripts/validador.js"></script>
+		<link type="text/css" rel="stylesheet" href="nucleo/css/windows/caras.css">
+		<link rel="shortcut icon" href="vista/img/logo.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">		
+	</head>	
+	<body onload="inicializarVentanas()">
+		<nav class="menubar">
+			<a href="javascript:void(0)" class="btnInicio"></a>
+			<div class="menuopciones">
+				<a href="cliente">Clientes</a>
+				<hr>
+				<a href="proyecto">Proyectos</a>
+				<a href="novedad">Novedad de Proyecto</a>
+				<hr>
+				<a href="facturar">Facturacion</a>				
+				<hr>
+			</div>			
+			<a href="javascript:void(0)" class="btnUsuario">{{usuario}}</a>
+			<div class="menuusuario">				
+				<a href="login/clave" class="usrconfig">Cambiar Clave</a>					
+				<a href="login/cerrar" class="usrexit">Cerrar Sesion</a>
+			</div>
+		</nav>
+		<div class="contenido">
+			{{contenido}}
+		</div>
+	</body>
+	
+	
+</html>
