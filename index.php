@@ -7,8 +7,14 @@ class indexAplication extends indexController{
 	function index(){		
 		parent::index();
 		$this->setTitulo('Clientes');
-		$usuario = ''; 									
-		$this->vistaVars = array('contenido' => $this->contenido(), 'usuario' => $usuario);
+		$usuario = '';
+		if (!empty(usuario::getId())){
+			$usuario = usuario::getObj()->getNombre();
+			$contenido = $this->contenido();
+		} 
+		else $contenido = (new loginController($this->conexion))->vista();
+		
+		$this->vistaVars = array('contenido' => $contenido, 'usuario' => $usuario);
 		
 		
 		echo $this->vista();	

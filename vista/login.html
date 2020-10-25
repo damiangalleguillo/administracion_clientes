@@ -1,0 +1,14 @@
+<div class="ventana estatica" style="margin-top: 50px;">
+	<div class="ventana-titulo">Iniciar Sesion</div>
+	<form action="login/iniciar" method="post">
+		<label>Usuario</label>
+		<input type="text" name="usr" value="{{usr}}">
+		<label>Contraseña</label>
+		<input type="password" name="pass">
+		<p style="color: red; margin-bottom: 20px;">{{error}}</p>
+		<div class="ventana-botonera">
+			<button>Iniciar</button>
+			<button>Cancelar</button>
+		</div>
+	</form>
+</div>

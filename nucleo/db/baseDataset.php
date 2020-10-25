@@ -84,13 +84,15 @@ abstract class baseDataset{
 	  $nombre = get_class($this);
 	  $respuesta = "<$nombre>";
 		
-		foreach($this->registros as $registro){
-			$respuesta .= '<registro>';
+		foreach($this->registros as $registro){			
+			$respuesta .= '<registro>';			
 			foreach($registro as $campo => $valor){
 				$metodo = 'get'.ucfirst(strtolower($campo));				
-				if (method_exists($this, $metodo)) $valor = $this->$metodo();
+				if (method_exists($this, $metodo)) {					
+					$valor = $this->$metodo();					
+				}
 				$respuesta.="<$campo>$valor</$campo>";
-			}
+			}			
 			foreach($otros as $campo){
 				$metodo = 'get'.ucfirst(strtolower($campo));				
 				if (method_exists($this, $metodo)){
@@ -102,6 +104,7 @@ abstract class baseDataset{
 						$respuesta.="<$campo>$valor</$campo>";
 				} 
 			}
+			$this->siguiente();
 			$respuesta.='</registro>';
 		}			
 		
@@ -150,6 +153,7 @@ abstract class baseDataset{
   
   function iterador(){
 	  $resultado = array();
+	  $this->primero();
 	  for($i=0;$i<$this->cantidad(); $i++){
 		  array_push($resultado, clone $this);
 		  $this->siguiente();

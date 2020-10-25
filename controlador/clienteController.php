@@ -4,17 +4,24 @@ class clienteController extends controlador{
 	function index($busqueda=''){
 		$clientesList = '';
 		$clientes = new cliente($this->conexion);
-		$clientes->buscar('APELLIDO', $busqueda, false, true);
-		foreach($clientes->iterador() as $c){
-			$clientesList .= $this->prepararVista('cliente.lineacliente', array('cliente' => $c));
-		}
-		
-		$this->vistaVars = array('clientesList' => $clientesList);
+		$clientes->buscar('APELLIDO', $busqueda, false, true);		
+		$clientes->buscar('NOMBRES', $busqueda, false, true);		
+		$this->vistaVars = array('clientes' => $clientes);
 	}
 	
 	
-	function guardarCliente($dni, $apellido, $nombres){
-		$cliente = new cliente($this->conexion, $dni, $apellido, $nombres);
+	function guardarCliente($id, $dni, $apellido, $nombres, $email, $telefono, $domicilio, $localidad){
+		$cliente = new cliente($this->conexion);
+		if (!$cliente->buscar('ID', $id)) $cliente->nuevo();		
+		$cliente->setDni($dni);
+		$cliente->setApellido($apellido);
+		$cliente->setNombres($nombres);
+		$cliente->setEmail($email);
+		$cliente->setTelefono($telefono);
+		$cliente->setDomicilio($domicilio);
+		$cliente->setLocalidad($localidad);
+		if ($cliente->getId() == null) $cliente->insertar();
+		$cliente->modificar();
 		
 		$this->redireccionar('cliente');
 	}

@@ -213,7 +213,7 @@ function inicializarVentanas(){
 			a.setAttribute('class', 'bntCerrar');
 			var arr = titulosVentanas[i].parentElement.className.split(" ");
 			if (arr.indexOf('estatica') != -1){
-				a.setAttribute('onclick', titulosVentanas[i].parentElement.dataset.onclick);
+				a.setAttribute('onclick', titulosVentanas[i].parentElement.dataset.onclose);
 			}else
 				a.setAttribute('onclick', 'ocultar("'+titulosVentanas[i].parentElement.id+'")');
 			titulosVentanas[i].appendChild(a);	

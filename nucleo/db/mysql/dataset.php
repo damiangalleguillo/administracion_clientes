@@ -2,6 +2,9 @@
 require_once __DIR__.'/../baseDataset.php';
 use Configuraciones\configuraciones;
  class dataset extends baseDataset{
+   private $consulta;
+   private $contador_consultas = 0;
+   private $variables = array();
    
   private function getLlavePrimaria(){
 	$filas = $this->conexion->fetch_array($this->conexion->consultar('select COLUMN_NAME as NOMBRE from INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA = \''.configuraciones::getDBConfiguracion()['nomb_db'].'\' and upper(TABLE_NAME) = upper(\''.get_class($this).'\') and COLUMN_KEY = \'PRI\''));  
@@ -78,7 +81,7 @@ use Configuraciones\configuraciones;
    $variables = array();
    if ($parcial) $dato="%$dato%";   
    if ($campo) {	
-	if (!$sensible) {				
+	if (!$sensible) {						
 		$campo = "upper($campo)";
 		$datoBusc = "upper(?)";
 	}
@@ -95,9 +98,15 @@ use Configuraciones\configuraciones;
 	 $where .= " order by $orden";  
    } 
    if (!$asc) $where .= ' desc';
- 
-   $parametros = $this->cargarParametros();         
-   $this->registros = $this->conexion->fetch_array($this->conexion->consultar('select * from '.get_class($this)."$parametros $where", $variables));      
+   $parametros = $this->cargarParametros();   
+   
+   if (empty($this->consulta)) $this->consulta = get_class($this);   
+   $consulta = 'select * from '.$this->consulta."$parametros $where";
+   $variables = array_merge($this->variables, $variables);
+   $this->variables = $variables;
+   
+   $this->consulta = "($consulta)a".$this->contador_consultas++;      
+   $this->registros = $this->conexion->fetch_array($this->conexion->consultar($consulta, $variables));   
    $this->seleccionar();   
    $retorno = count($this->registros);
    return $retorno>0? $retorno : false;

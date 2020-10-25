@@ -52,7 +52,7 @@ class indexController extends controlador{
 	private function antiCSRF($contenido){
 		$token = '<input type="hidden" name="_token" value="'.usuario::genToken().'">';
 		
-		preg_match_all('/<form [A-Za-z="\/ ->]*/', $contenido, $array, PREG_SET_ORDER);
+		preg_match_all('/<form[\S\s]+?\n/', $contenido, $array, PREG_SET_ORDER);
 		foreach($array as $indice => $cadena){
 			foreach($cadena as $valor){						
 				if (stripos($valor, 'post') && !stripos($valor, 'input'))

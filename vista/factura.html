@@ -1,0 +1,23 @@
+<div class="ventana estatica" style="margin-top: 50px;" data-onclose="window.location = ''">
+	<div class="ventana-titulo">Facturas</div>
+	<div class="ventana-grupo" style="height:350px;">
+		<table>
+			<thead><tr><th>Fecha</th><th>Numero</th><th>Cliente</th><th>Proyecto</th><th>Importe</th></tr></thead>
+			<tbody>
+				@foreach factura in facturas->iterador()
+				<tr><td>{{factura->getFecha()}}</td><td>{{factura->getNumero()}}</td><td>{{factura->getCliente()}}</td><td>{{factura->getProyecto()}}</td><td>{{factura->getImporte()}}</td></tr>
+				@endforeach
+			</tbody>
+			<tfoot></tfoot>
+		</table>
+	</div>
+	<div class="ventana-botonera">
+		<button>Nueva</button>
+		<button>Anular</button>
+		<button>Imprimir</button>
+	</div>
+</div>
+
+<div class="ventana">
+	<div class="ventana-titulo">Facturar</div>
+</div>

@@ -22,6 +22,20 @@ class moduloDeDatos{
 		mysqli_close($this->conexion);
 	}
 	
+	public function startTransaction(){
+		$this->conexion->autocommit(false);		
+	}
+	
+	public function endTransactionRollback(){
+		$this->conexion->rollback();
+		$this->conexion->autocommit(true);		
+	}
+	
+	public function endTransactionCommit(){
+		$this->conexion->commit();
+		$this->conexion->autocommit(true);		
+	}
+	
 	private function getBindTipo($mysqlTipo){			
 		
 		switch($mysqlTipo){
@@ -49,7 +63,7 @@ class moduloDeDatos{
 	}
  
 	function consultar($consulta, $registro = null){				
-			$tipos = '';			
+			$tipos = '';						
 			$stmt = $this->conexion->prepare($consulta);
 			$parametros = array();
 			if (isset($registro)){				

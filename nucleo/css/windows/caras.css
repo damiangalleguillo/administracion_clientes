@@ -55,17 +55,7 @@ tr{
 	height: 20px;
 }
 
-tbody {
-  display: block;  
-  overflow: hidden;
-  overflow-y: scroll;  
-}
 
-table thead, tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
 
 tr:hover{
 	background-color: rgb(0, 120, 215);
@@ -85,13 +75,17 @@ td input, td select{
 
 
 /*cuadros de texto*/
-input[type=text], input[type=password], input[type=number], input[type=date], select{
+input[type=text], input[type=password], input[type=number], input[type=date], select, textarea{
 	border:solid 1px black;
 	font-family: sans-serif;
 	height:25px;
 }
 
-input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=date]:hover, select:hover{
+textarea{
+	height:75px;
+}
+
+input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=date]:hover, select:hover, textarea:hover{
 	border:solid 1px rgb(0, 120, 215);
 }
 
@@ -176,7 +170,8 @@ fieldset > legend{
 .ventana-fila input[type=password], 
 .ventana-fila input[type=number],
 .ventana-fila input[type=date],
-.ventana-fila select{
+.ventana-fila select,
+.ventana-fila textarea{
 	width: 100%;
 	margin-right: 2px;
 	margin-top: 3px;
@@ -196,7 +191,8 @@ fieldset > legend{
 .ventana-grupo > input[type=number],
 .ventana-grupo > input[type=date],
 .ventana-grupo > select, 
-.ventana-grupo > label{
+.ventana-grupo > label, 
+.ventana-grupo > textarea{
 	display: inline-block;
 	margin-left: 0;
 	width: 100%;
@@ -213,6 +209,7 @@ ul[class=checklist]{
 .ventana > form > input[type=number], 
 .ventana > form > input[type=date], 
 .ventana > form > select,
+.ventana > form > textarea,
 .ventana > form > div[class=checklist]{
 	display: block;
 	width: 90%;

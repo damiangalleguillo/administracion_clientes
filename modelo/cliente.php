@@ -1,18 +1,5 @@
 <?php
 class cliente extends dataset{
-	
-	function __construct($conexion, $dni=null, $apellido=null, $nombres=null){
-		parent::__construct($conexion);
-		if ($dni){
-			$this->nuevo();
-			$this->setDni($dni);
-			$this->setApellido($apellido);
-			$this->setNombres($nombres);
-			$this->setCuil(0);
-			$this->setUsuario_id(1);
-			$this->insertar();	
-		}		
-	}
 
 	function getId(){
  		return $this->ID;
@@ -37,6 +24,10 @@ class cliente extends dataset{
 	function setNombres($Nombres){
  		$this->NOMBRES = $Nombres;
 	}
+	
+	function getNombreCompleto(){
+		return $this->APELLIDO.', '.$this->NOMBRES;
+	}
 
 	function getDni(){
  		return $this->DNI;
@@ -46,24 +37,46 @@ class cliente extends dataset{
  		$this->DNI = $Dni;
 	}
 
-	function getCuil(){
- 		return $this->CUIL;
+	function getEmail(){
+ 		return $this->EMAIL;
 	}
 
-	function setCuil($Cuil){
- 		$this->CUIL = $Cuil;
+	function setEmail($Email){
+ 		$this->EMAIL = $Email;
 	}
 
-	function getUsuario_id(){
- 		return $this->USUARIO_ID;
+	function getTelefono(){
+ 		return $this->TELEFONO;
 	}
 
-	function setUsuario_id($Usuario_id){
- 		$this->USUARIO_ID = $Usuario_id;
+	function setTelefono($Telefono){
+ 		$this->TELEFONO = $Telefono;
+	}
+
+	function getDomicilio(){
+ 		return $this->DOMICILIO;
+	}
+
+	function setDomicilio($Domicilio){
+ 		$this->DOMICILIO = $Domicilio;
+	}
+
+	function getLocalidad(){
+ 		return $this->LOCALIDAD;
+	}
+
+	function setLocalidad($Localidad){
+ 		$this->LOCALIDAD = $Localidad;
 	}
 	
-	function getNombreCompleto(){
-		return $this->APELLIDO.', '.$this->NOMBRES;
+	function updateProyecto($id, $nombre, $descripcion){
+		$proyectos = new proyecto($this->conexion);
+		if(!$proyectos->buscar('ID', $id)) $proyectos->nuevo();		
+		$proyectos->setNombre($nombre);
+		$proyectos->setDescripcion($descripcion);
+		$proyectos->setCliente_id($this->ID);
+		if($proyectos->getId()==null) $proyectos->insertar();
+		else $proyectos->modificar();
 	}
 
 

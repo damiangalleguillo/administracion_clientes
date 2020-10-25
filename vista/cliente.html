@@ -1,20 +1,24 @@
-<div class="ventana estatica" style="margin-top:50px" data-onclick="window.location = ''">
+<div class="ventana estatica" style="margin-top:50px" data-onclose="window.location = ''">
 	<div class="ventana-titulo">Clientes</div>	
 		<form action="cliente" method="get">						
 			<div class="ventana-grupo ventana-fila">
 				<input type="text" name="busqueda" id="busqueda"><button>Buscar</button>				
 			</div>
 		</form>
-	<fieldset>
+	<fieldset  style="height: 250px">
 	<legend>Clientes</legend>
-	<table style="height: 250px">
+	<table>
 		<thead><tr><th>DNI</th><th>Nombre</th></tr></thead>
-		<tbody>{{clientesList}}</tbody>
+		<tbody>
+		@foreach cliente in clientes->iterador()
+			<tr onclick="seleccionarFila(); cargarFormulario('cliente/get?noweb&id={{cliente->getId()}}')"><td>{{cliente->getDni()}}</td><td>{{cliente->getNombreCompleto()}}</td></tr>
+		@endforeach	
+		</tbody>
 		<tfoot></tfoot>
 	</table>
 	</fieldset>
 	<div class="ventana-botonera">
-		<button onclick="mostrar('abmclientes')">Agregar</button>
+		<button onclick="ID.value = ''; clientesForm.reset(); mostrar('abmclientes')">Agregar</button>
 		<button>Eliminar</button>
 		<button onclick="mostrar('abmclientes')">Modificar</button>
 		<button onclick="mostrar('listadoproyectos')">Proyectos</button>
@@ -23,16 +27,25 @@
 
 <div id="abmclientes" class="ventana">
 	<div class="ventana-titulo">Administrar Clientes</div>
-	<form action="cliente/guardar" method="post">
+	<form action="cliente/guardar" method="post" id="clientesForm">
 		<label>DNI</label>
+		<input type="hidden" name="id" id="ID">
 		<input type="number" name="dni" id="DNI">
 		<label>Apellido</label>
 		<input type="text" name="apellido" id="APELLIDO">
 		<label>Nombres</label>
 		<input type="text" name="nombres" id="NOMBRES">
+		<label>E-Mail</label>
+		<input type="text" name="email" id="EMAIL">
+		<label>Telefono</label>
+		<input type="text" name="telefono" id="TELEFONO">
+		<label>Domicilio</label>
+		<input type="text" name="domicilio" id="DOMICILIO">
+		<label>Localidad</label>
+		<input type="text" name="localidad" id="LOCALIDAD">
 		<div class="ventana-botonera">
 			<button>Aceptar</button>
-			<button type="reset">Cancelar</button>
+			<button type="button" onclick="ocultar('abmclientes')">Cancelar</button>
 		</div>
 	</form>
 </div>

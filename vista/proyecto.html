@@ -1,36 +1,47 @@
-<div class="ventana estatica" style="margin-top:50px" data-onclick="window.location = ''">
+<div class="ventana estatica" style="margin-top:50px" data-onclose="window.location = ''">
 	<div class="ventana-titulo">Proyectos</div>	
 		<form action="proyecto" method="get">						
 			<div class="ventana-grupo ventana-fila">
-				<input type="text" name="busqueda" id="busqueda"><button>Buscar</button>				
+				<input type="text" name="busqueda" id="busqueda" value="{{busqueda}}"><button>Buscar</button>				
 			</div>
 		</form>
-	<fieldset>
+	<fieldset  style="height: 250px">
 	<legend>Proyectos</legend>
-	<table style="height: 250px">
-		<thead><tr><th>Fecha</th><th>Nombre</th><th>Cliente</th></tr></thead>
-		<tbody></tbody>
+	<table>
+		<thead><tr><th>Nombre</th><th>Cliente</th></tr></thead>
+		<tbody>
+			@foreach proyecto in proyectos->iterador()
+			<tr onclick="seleccionarFila(); cargarFormulario('proyecto/get?noweb&id={{proyecto->getId()}}')"><td>{{proyecto->getNombre()}}</td><td>{{proyecto->getClienteNombre()}}</td></tr>
+			@endforeach
+		</tbody>
 		<tfoot></tfoot>
 	</table>
 	</fieldset>
 	<div class="ventana-botonera">
-		<button onclick="mostrar('abmproyecto')">Agregar</button>
+		<button onclick="ID.value = ''; proyectoFrom.reset(); mostrar('abmproyecto')">Agregar</button>
 		<button>Eliminar</button>
 		<button onclick="mostrar('abmproyecto')">Modificar</button>
-		<button onclick="mostrar('listadoproyectos')">Proyectos</button>
+		<button onclick="mostrar('listadoproyectos')">Facturas</button>
 	</div>
 </div>
 
 <div id="abmproyecto" class="ventana">
 	<div class="ventana-titulo">Administrar Proyectos</div>
-	<form action="cliente/guardar" method="post">
-		<label>Fecha</label>
-		<input type="date" name="fecha" id="FECHA">		
+	<form action="proyecto/guardar" method="post" id="proyectoFrom">
+		<input type="hidden" name="id" id="ID">
+		<label>Cliente</label>
+		<select name="cliente_id" id="CLIENTE_ID">
+			@foreach cliente in clientes->iterador()
+			<option value="{{cliente->getId()}}">{{cliente->getNombreCompleto()}}</option>
+			@endforeach
+		</select>		
 		<label>Nombre</label>
 		<input type="text" name="nombre" id="NOMBRE">
+		<label>Descripcion</label>
+		<textarea name="descripcion" id="DESCRIPCION"></textarea>
 		<div class="ventana-botonera">
 			<button>Aceptar</button>
-			<button type="reset">Cancelar</button>
+			<button type="button" onclick="ocultar('abmproyecto')">Cancelar</button>
 		</div>
 	</form>
 </div>

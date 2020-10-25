@@ -13,9 +13,9 @@ abstract class controlador{
 	public $vistaVars = array();
 	
 	function __construct($cnx=null){
-		set_exception_handler(array($this, 'exceptionManager'));
+		/*set_exception_handler(array($this, 'exceptionManager'));
 		set_error_handler(array($this, 'errorManager'));
-		
+		*/
 		try{
 			if ($cnx===null){
 				$dbcnx = configuraciones::getDBConfiguracion();
@@ -82,42 +82,89 @@ abstract class controlador{
 			if (file_exists($this->vista)) return $this->prepararVista($this->nombre, $this->vistaVars);		
 			else return '';
 	}
+	
+	private function getValorVariableVista($variable, $variables = array()){			
+		$varInicial = $variable;
+		$posFlecha = strpos($variable, '->');
+		if ($posFlecha !== false){
+			$objeto = substr($variable, 0, $posFlecha);				
+			$atributo = substr($variable, $posFlecha+2);
+			$parametros = array();
+			if (substr($atributo, -1, 1) == ')'){				
+				$posParentesis = strpos($atributo, '(');
+				$metodo = substr($atributo, 0, $posParentesis);
+				$parametros = substr($atributo, $posParentesis+1, -1);				
+				$parametros = explode(',', $parametros);	
+				if ($parametros[0] != ''){
+					foreach($parametros as $indice => $p){
+						$parametros[$indice] = $this->getValorVariableVista($p, $variables);
+					}
+				}else $parametros = array();					
+			}			
+			if (isset($variables[$objeto])) return $this->ejecutarMetodo($variables[$objeto], $metodo, $parametros);
+			else $variable = $objeto;
+		}
+		else{
+			if(is_numeric($variable)) return $variable;
+			else if (isset($variables[$variable])) return $variables[$variable];
+		}
+		echo "<b>$variable</b> no esta definida como una Variable de Vista<br>";
+		return '{{'.$varInicial.'}}';
+	}
 
 	public function prepararVista($vista, $variables = array()){
-			$vista = 'vista/'.str_replace('.', '/', $vista).'.html';			
-			$recurso = fopen($vista, 'r');
-			$contenido = fread($recurso, filesize($vista));
-			preg_match_all('/{{[A-Za-z->0-9_(), ]+[\}]{2}/', $contenido, $array, PREG_SET_ORDER);
+			$archivo = 'vista/'.str_replace('.', '/', $vista).'.html';
+			if (file_exists($archivo)){
+				$recurso = fopen($archivo, 'r');
+				$contenido = fread($recurso, filesize($archivo));
+			}else $contenido = $vista; 			
 				
-			foreach($array as $indice => $cadena)
-				foreach($cadena as $valor){
-					$pos = strpos($valor, '->');
-					if ($pos !== false){
-						$objeto = substr($valor, 2, $pos-2);
-						$propiedad = substr($valor, $pos+2, -2);
-						if (substr($propiedad, -1, 1) == ')'){
-							$parentesis = strpos($propiedad, '(');
-							$cadena = substr($propiedad, $parentesis+1, -1);
-							$parametros = array();
-							if($cadena != '') $parametros = explode(',', $cadena);							
-							foreach($parametros as $indice => $param){
-								$parametros[$indice] = $variables[$param]??$param;
-							}
-							$metodo = substr($propiedad, 0, $parentesis);														
-							$retorno = $this->ejecutarMetodo($variables[$objeto], $metodo, $parametros);
-						} 
-						else{
-							$retorno = $variables[$objeto]->$propiedad;
-						}											
-						$contenido = str_replace($valor, $retorno, $contenido);
-					}
-					else{
-						$variable = substr($valor, 2, -2);
-						if (isset($variables[$variable]))
-							$contenido = str_replace($valor, $variables[$variable], $contenido);
-						else	echo "<b>$variable</b> no esta definida como una Variable de Vista<br>";
-					}					
+			preg_match_all('/@if[\S\s]+?@endif/', $contenido, $arrayCondiciones, PREG_SET_ORDER);
+			foreach($arrayCondiciones as $indice => $valor)
+				foreach($valor as $condicion){					
+					preg_match('/(@if\s)[\S]+/', $condicion, $variable);
+					$condAux = substr($variable[0], 4);
+					if ($condAux[0] == '!') $condAux = !$this->getValorVariableVista(substr($condAux, 1), $variables);
+					else $condAux = $this->getValorVariableVista(substr($condAux, 0), $variables);
+					if ($condAux){
+						$resultado = str_replace($variable[0], '', $condicion);
+						$resultado = str_replace('@endif', '', $resultado);						
+						$contenido = str_replace($condicion, $resultado, $contenido);
+					}						
+					else $contenido = str_replace($condicion, '', $contenido);
 				}			
+
+			preg_match_all('/@foreach[\S\s]+?@endforeach/', $contenido, $arrayRepeticiones, PREG_SET_ORDER);			
+			foreach($arrayRepeticiones as $indice => $valor)
+				foreach($valor as $repeticion){
+					preg_match('/@foreach\s[\S]+\sin\s[\S]+/', $repeticion, $parametros);
+					preg_match('/@foreach\s[\S]+\sin\s/', $parametros[0], $iterable);
+					
+					$bloqueRepeticion = str_replace($parametros[0], '', $repeticion);					
+					$bloqueRepeticion = str_replace('@endforeach', '', $bloqueRepeticion);
+					
+					$iterable = str_replace($iterable, '', $parametros[0]);
+					$variable = str_replace($iterable, '', $parametros[0]);
+					$variable = str_replace('@foreach ', '', $variable);
+					$variable = trim(str_replace(' in', '', $variable));
+					
+					$iterable = $this->getValorVariableVista($iterable, $variables);
+					$salidaRepeticion = '';					
+					foreach($iterable as $index => $var){
+						$salidaRepeticion .= $this->prepararVista($bloqueRepeticion, array('index' => $index, $variable => $var));						
+					}
+					
+					$contenido = str_replace($repeticion, $salidaRepeticion, $contenido);					
+				}						
+				
+				preg_match_all('/{{[A-Za-z->0-9_(), ;]+[\}]{2}/', $contenido, $array, PREG_SET_ORDER);							
+				foreach($array as $indice => $cadena)
+					foreach($cadena as $valor){
+						$resultado = $this->getValorVariableVista(substr($valor, 2, -2), $variables);
+						$contenido = str_replace($valor, $resultado, $contenido);					
+					}
+			
+			
 			return $contenido;
 	}
 	
@@ -147,7 +194,9 @@ abstract class controlador{
 	}
 	
 	function errorManager($errno, $errstr, $errfile, $errline){
-		throw new Exception($errstr, $errno);
+		$e = new Exception($errstr, $errno);
+		//$e->setLine($errline);
+		throw $e;
 	}
 	
 }
