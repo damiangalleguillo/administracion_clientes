@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2020 a las 20:41:21
+-- Tiempo de generación: 27-10-2020 a las 04:08:13
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.3
 
@@ -33,11 +33,21 @@ CREATE TABLE `cliente` (
   `APELLIDO` varchar(45) NOT NULL,
   `NOMBRES` varchar(45) NOT NULL,
   `DNI` int(11) DEFAULT NULL,
+  `CUIT` varchar(20) DEFAULT NULL,
   `EMAIL` varchar(45) DEFAULT NULL,
   `TELEFONO` varchar(45) DEFAULT NULL,
   `DOMICILIO` varchar(45) DEFAULT NULL,
-  `LOCALIDAD` varchar(45) DEFAULT NULL
+  `LOCALIDAD` varchar(45) DEFAULT NULL,
+  `CONDICION` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`ID`, `APELLIDO`, `NOMBRES`, `DNI`, `CUIT`, `EMAIL`, `TELEFONO`, `DOMICILIO`, `LOCALIDAD`, `CONDICION`) VALUES
+(1, 'Galleguillo', 'Diego', 31333155, '20-31333155-6', 'ldiego@gmail.com', '03865632934', 'avenida donde vive 1569', 'aguilares', 0),
+(2, 'Lopez', 'Roberto', 31333152, '20-31333152-5', 'tgdam.rc@gmail.com', '132132132123', 'ALEJANDRO AGUADO 1620', 'aguilares', 2);
 
 -- --------------------------------------------------------
 
@@ -53,8 +63,19 @@ CREATE TABLE `factura` (
   `HS_DESARAROLLO_CANT` decimal(10,0) NOT NULL,
   `HS_DESARAROLLO_IMP` decimal(10,0) NOT NULL,
   `PROYECTO_ID` int(11) NOT NULL,
-  `USUARIO_ID` int(11) NOT NULL
+  `USUARIO_ID` int(11) NOT NULL,
+  `ANULADO` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`ID`, `FECHA`, `HS_CAPACITACION_CANT`, `HS_CAPACITACION_IMP`, `HS_DESARAROLLO_CANT`, `HS_DESARAROLLO_IMP`, `PROYECTO_ID`, `USUARIO_ID`, `ANULADO`) VALUES
+(1, '2020-10-25', '200', '50', '100', '10', 1, 1, 0),
+(2, '2020-10-25', '200', '50', '100', '10', 1, 1, 0),
+(3, '2020-10-25', '200', '50', '100', '10', 1, 1, 1),
+(4, '2020-10-25', '200', '50', '100', '10', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -68,6 +89,13 @@ CREATE TABLE `proyecto` (
   `DESCRIPCION` blob NOT NULL,
   `CLIENTE_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `proyecto`
+--
+
+INSERT INTO `proyecto` (`ID`, `NOMBRE`, `DESCRIPCION`, `CLIENTE_ID`) VALUES
+(1, 'gestion de clientes', 0x73697374656d6120706172612067657374696f6e20646520636c69656e7465732c207375732070726f796563746f732079206661637475726173, 1);
 
 -- --------------------------------------------------------
 
@@ -87,7 +115,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID`, `EMAIL`, `PASS`, `NOMBRE`) VALUES
-(1, 'alferok@gmail.com', '1234', 'Alfredo');
+(1, 'tgdam.rc@gmail.com', '1234', 'Damian'),
+(2, 'ignacioarroyo17@gmail.com', '1234', 'Ignacio'),
+(3, 'milumedina98.mm@gmail.com', '1234', 'Milagros');
 
 --
 -- Índices para tablas volcadas
@@ -128,25 +158,25 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proyecto`
 --
 ALTER TABLE `proyecto`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

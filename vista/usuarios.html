@@ -5,19 +5,34 @@
 			<thead><tr><th>Nombre</th></tr></thead>
 			<tbody>
 				@foreach usuario in usuarios->iterador()
-				<tr onclick="seleccionarFila()"><td>{{usuario->getNombre()}}</td></tr>
+				<tr onclick="seleccionarFila(); cargarFormulario('usuarios/get?noweb&id={{usuario->getId()}}')"><td>{{usuario->getNombre()}}</td></tr>
 				@endforeach
 			</tbody>
 			<tfoot></tfoot>
 		</table>
 	</div>
 	<div class="ventana-botonera">
-		<button>Agregar</button>
+		<button onclick="ID.value = ''; usuariosForm.reset(); mostrar('abmusuarios');">Agregar</button>
 		<button>Eliminar</button>
-		<button>Modificar</button>
+		<button onclick="mostrar('abmusuarios');">Modificar</button>
 	</div>
 </div>
 
-<div class="ventana">
+<div id="abmusuarios" class="ventana">
 	<div class="ventana-titulo">Usuarios</div>
+	<form action="usuarios/guardar" method="post" id="usuariosForm">
+	<div class="ventana-grupo">
+		<label>Nombre</label>
+		<input type="hidden" name="id" id="ID">
+		<input type="text" name="nombre" id="NOMBRE">
+		<label>Contraseña</label>
+		<input type="text" name="pass" id="PASS">
+		<label>Correo Electronico</label>
+		<input type="text" name="email" id="EMAIL">		
+	</div>
+	<div class="ventana-botonera">
+		<button>Aceptar</button>
+		<button type="button" onclick="ocultar('abmusuarios')">Modificar</button>
+	</div>
+	</form>
 </div>

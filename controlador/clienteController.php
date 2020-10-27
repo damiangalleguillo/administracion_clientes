@@ -5,12 +5,12 @@ class clienteController extends controlador{
 		$clientesList = '';
 		$clientes = new cliente($this->conexion);
 		$clientes->buscar('APELLIDO', $busqueda, false, true);		
-		$clientes->buscar('NOMBRES', $busqueda, false, true);		
+		//$clientes->buscar('NOMBRES', $busqueda, false, true);		
 		$this->vistaVars = array('clientes' => $clientes);
 	}
 	
 	
-	function guardarCliente($id, $dni, $apellido, $nombres, $email, $telefono, $domicilio, $localidad){
+	function guardarCliente($id, $dni, $apellido, $nombres, $email, $telefono, $domicilio, $localidad, $cuit, $condicion){
 		$cliente = new cliente($this->conexion);
 		if (!$cliente->buscar('ID', $id)) $cliente->nuevo();		
 		$cliente->setDni($dni);
@@ -20,6 +20,8 @@ class clienteController extends controlador{
 		$cliente->setTelefono($telefono);
 		$cliente->setDomicilio($domicilio);
 		$cliente->setLocalidad($localidad);
+		$cliente->setCuit($cuit);
+		$cliente->setCondicion($condicion);
 		if ($cliente->getId() == null) $cliente->insertar();
 		$cliente->modificar();
 		

@@ -2,22 +2,104 @@
 	<div class="ventana-titulo">Facturas</div>
 	<div class="ventana-grupo" style="height:350px;">
 		<table>
-			<thead><tr><th>Fecha</th><th>Numero</th><th>Cliente</th><th>Proyecto</th><th>Importe</th></tr></thead>
+			<thead><tr><th>Fecha</th><th>Numero</th><th>Cliente</th><th>Proyecto</th><th>Importe</th><th>Anulado</th></tr></thead>
 			<tbody>
 				@foreach factura in facturas->iterador()
-				<tr><td>{{factura->getFecha()}}</td><td>{{factura->getNumero()}}</td><td>{{factura->getCliente()}}</td><td>{{factura->getProyecto()}}</td><td>{{factura->getImporte()}}</td></tr>
+				<tr onclick="seleccionarFila(); ID.value = {{factura->getId()}}"><td>{{factura->getFecha()}}</td><td>{{factura->getNumero()}}</td><td>{{factura->getClienteNombre()}}</td><td>{{factura->getProyectoNombre()}}</td><td>$ {{factura->getImporte()}}</td><td>{{factura->isAnuladoTxt()}}</td></tr>
 				@endforeach
 			</tbody>
 			<tfoot></tfoot>
 		</table>
 	</div>
 	<div class="ventana-botonera">
-		<button>Nueva</button>
-		<button>Anular</button>
+		<button onclick="mostrar('abmfactura')">Nueva</button>
+		<button onclick="anularFactura();">Anular</button>
 		<button>Imprimir</button>
 	</div>
 </div>
 
-<div class="ventana">
+<div id="abmfactura" class="ventana">
 	<div class="ventana-titulo">Facturar</div>
+	<div class="ventana-grupo">	
+	<fieldset>
+		<legend>Cliente</legend>
+		<div class="ventana-fila">
+			<input type="hidden" id="ID">
+			<input type="text" name="dni" id="DNI" placeholder="D.N.I." style="width: 150px;" onchange="cargarProyectos();">
+			<select id="cliente_id" onchange="cargarProyectos();">
+				<option value="-1" selected disabled hidden>Seleccione un Cliente</option>
+				@foreach cliente in clientes->iterador()
+					<option value="{{cliente->getId()}}" data-dni="{{cliente->getDni()}}">{{cliente->getNombreCompleto()}}</option>
+				@endforeach
+			</select>
+		</div>		
+		<form action="factura/guardar" method="post">
+		<div class="ventana-fila">
+			<select name="proyecto_id" id="proyecto_id">
+				<option value="-1" selected disabled hidden>Seleccione un Proyecto</option>					
+			</select>
+		</div>
+	</fieldset>
+	</div>
+	<div class="ventana-grupo">
+		<fieldset  style="height: 250px;">
+			<legend>Detalle de Factura</legend>		
+			<table>
+				<thead><tr><th>Item</th><th>Cantidad</th><th>Importe</th><th>Sub-Total</th></tr></thead>
+				<tbody>
+					<tr><td>Horas Desarrollo</td><td><input name="hdc" id="hdc" type="number" step="0.01" onchange="sumarTotales()"></td><td><input name="hdi" id="hdi" type="number" step="0.01" onchange="sumarTotales()"></td><td id="hdt"></td></tr>
+					<tr><td>Horas Capacitacion</td><td><input name="hcc" id="hcc" type="number" step="0.01" onchange="sumarTotales()"></td><td><input name="hci" id="hci" type="number" step="0.01" onchange="sumarTotales()"></td><td id="hct"></td></tr>				
+				</tbody>			
+				<tfoot>
+					<tr><td colspan="2"><input type="date" name="fecha" value="{{fecha}}"></td><td style="text-align: right;"><b>Total:</b></td><td id="total"></td></tr>
+				</tfoot>
+			</table>
+		</fieldset>
+	</div>
+	<div class="ventan-botonera">
+		<button>Aceptar</button>
+		<button>Cancelar</button>
+	</div>
+	</form>
 </div>
+
+<script>
+
+function sumarTotales(){
+	hdt.innerHTML = '$'+(hdc.value * hdi.value);
+	hct.innerHTML = '$'+(hcc.value * hci.value);
+	total.innerHTML = '$'+(hdc.value * hdi.value + hcc.value * hci.value);
+}
+
+function cargarProyectos(){	
+	if (sender() == DNI){
+		for(let i=1; i<cliente_id.options.length; i++){
+			if (cliente_id.options[i].dataset.dni == DNI.value) {
+				cliente_id.value = cliente_id.options[i].value;
+				break;
+			}
+		}
+	}else	DNI.value = cliente_id.options[cliente_id.selectedIndex].dataset.dni;
+	
+	llamadaAJAX('factura/proyectos?noweb&cliente_id='+cliente_id.value, 'get', 
+						function(oXml){
+							r = oXml.responseText;							
+							if (r.trim() != ''){
+								r = JSON.parse(r);
+								proyecto_id.innerHTML = '';
+								for(let i=0; i<r.length; i++){
+									let opcion = document.createElement('option');
+									opcion.value = r[i].id;
+									opcion.text = r[i].nombre;
+									proyecto_id.add(opcion);
+								}								
+							}
+						});
+}
+
+function anularFactura(){
+	if (confirm('Desea anular esta Factura???')){
+		window.location = 'factura/anular?id='+ID.value; 
+	}
+}
+</script>
