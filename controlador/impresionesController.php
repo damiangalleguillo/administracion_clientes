@@ -100,6 +100,71 @@ class impresionesController extends controlador{
 		
 	}
 	
+	function reporteRankingImpresiones($titulo, $arreglo){		
+		$reporte = new FPDF('P', 'mm',);
+		$reporte->AddPage();
+		$reporte->Rect(5, 5, 200, 40, 'D');		
+		$reporte->SetFillColor(255, 255, 255);		
+		$reporte->SetFont('Arial', 'B');				
+		$reporte->SetFontSize(16);
+		$reporte->SetXY(5, 1);
+		$reporte->Cell(200, 20, $titulo, 0, 0, 'C');
+		$reporte->SetXY(118, 10);
+		
+		$reporte->SetXY(120, 60);
+		$reporte->SetFontSize(9);
+		
+		$reporte->SetXY(5, 40);
+		$reporte->SetFont('Arial', 'B', 8);
+		$reporte->SetFillColor(211, 211, 211);
+		$reporte->Cell(25, 8, 'Nro', 1, 0, 'C', true);
+		$reporte->Cell(75, 8, 'Cliente', 1, 0, 'C', true);
+		$reporte->Cell(50, 8, 'Porcentaje de Ingresos', 1, 0, 'C', true);
+		$reporte->Cell(50, 8, 'Importe Facturado', 1, 1, 'C', true);				
+		$c=0;
+		foreach($arreglo as $cliente){
+			$reporte->SetX(5);
+			$c++;
+			$reporte->Cell(25, 8, $c, 1, 0, 'C');
+			$reporte->Cell(75, 8, $cliente->getNombreCompleto(), 1, 0, 'C');
+			$reporte->Cell(50, 8, $cliente->getProyectosPorc().'%', 1, 0, 'C');
+			$reporte->Cell(50, 8, '$'.$cliente->getImporteFacturacionTotal(), 1, 1, 'C');
+		}		
+		$reporte->output('archivo.pdf', 'i');			
+	}
+	
+	function reporteProyectosImpresiones($titulo, $arreglo){		
+		$reporte = new FPDF('P', 'mm',);
+		$reporte->AddPage();
+		$reporte->Rect(5, 5, 200, 40, 'D');		
+		$reporte->SetFillColor(255, 255, 255);		
+		$reporte->SetFont('Arial', 'B');				
+		$reporte->SetFontSize(16);
+		$reporte->SetXY(5, 1);
+		$reporte->Cell(200, 20, $titulo, 0, 0, 'C');
+		$reporte->SetXY(118, 10);
+		
+		$reporte->SetXY(120, 60);
+		$reporte->SetFontSize(9);
+		
+		$reporte->SetXY(5, 40);
+		$reporte->SetFont('Arial', 'B', 8);
+		$reporte->SetFillColor(211, 211, 211);
+		$reporte->Cell(25, 8, 'Nro', 1, 0, 'C', true);
+		$reporte->Cell(100, 8, 'Cliente', 1, 0, 'C', true);
+		$reporte->Cell(75, 8, 'Cantidad de Proyectos', 1, 1, 'C', true);		
+		$c=0;
+		foreach($arreglo as $cliente){
+			$reporte->SetX(5);
+			$c++;
+			$reporte->Cell(25, 8, $c, 1, 0, 'C');
+			$reporte->Cell(100, 8, $cliente->getNombreCompleto(), 1, 0, 'C');
+			$reporte->Cell(75, 8, count($cliente->getProyectos()), 1, 1, 'C');			
+		}		
+		$reporte->output('archivo.pdf', 'i');			
+	}
+	
+	
 	function aLetras($numero){		
 		$formatter = new NumeroALetras;
 

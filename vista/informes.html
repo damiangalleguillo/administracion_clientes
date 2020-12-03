@@ -30,7 +30,7 @@
 				Porcentaje de proyectos iniciados por periodo anual.
 			</div>
 		</div>
-		<div class="graph-box">
+		<div class="graph-box" onclick="popup('informes/proyectosPorCliente?noweb&imprimir=1')">
 			<div class="graph-box-title">Proyectos por Cliente</div>
 			<div class="graph-bar">
 			@foreach cliente in proyectosxcliente
@@ -41,7 +41,7 @@
 				Porcentaje de proyectos iniciados por Clientes.
 			</div>
 		</div>
-		<div class="graph-box">
+		<div class="graph-box" onclick="popup('informes/ingresosPorCliente?noweb&imprimir=1')">
 			<div class="graph-box-title">Rank de Clientes</div>
 			<div class="graph-bar">
 			@foreach cliente in ingresosxcliente

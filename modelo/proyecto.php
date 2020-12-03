@@ -86,6 +86,15 @@ class proyecto extends dataset{
 		return $retorno;
 	}
 	
+	function getImporteFacturado(){
+		$total = 0;
+		foreach($this->getFacturas() as $factura){
+			$total += $factura->getImporte();
+		}
+		
+		return $total;
+	}
+	
 	private function getTipoFact(){
 		switch($this->getCliente()->getCondicion()){
 			case 0: return 'B'; break;

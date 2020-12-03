@@ -1,11 +1,12 @@
 <?php
+
 class informesController extends controlador{
 
 	function index(){
 		$this->proyectosSinFacturar();
 		$this->proyectosPorPeriodo();
-		$this->proyectosPorCliente();
-		$this->ingresosPorCliente();
+		$this->proyectosPorClienteInformes();
+		$this->ingresosPorClienteInformes();
 	}
 	
 	private function proyectosSinFacturar(){
@@ -22,33 +23,47 @@ class informesController extends controlador{
 		}
 		
 		$this->vistaVars['sinfacturar'] = (int) ($sinfact * 100 / $total);
-		$this->vistaVars['sinfacturar_fact'] = $proyectSinFac;
+		$this->vistaVars['sinfacturar_fact'] = $proyectSinFac;		
 	}
 	
-	private function proyectosPorPeriodo(){
+	function proyectosPorPeriodo($imprimir = false){
 		$proyectosxperiodo = new proyectosxperiodo($this->conexion);
 		$proyectosxperiodo->traerRegistros();
 		$this->vistaVars['proyectporperiod'] = $proyectosxperiodo->iterador();
 	}
 	
-	private function proyectosPorCliente(){
+	function proyectosPorClienteInformes($imprimir = false){
 		$clientes = new cliente($this->conexion);
 		$clientes->buscar('BAJA', 0);		
 		$proyectos = array(); 
+		$cont = 0;
 		foreach($clientes->iterador() as $cliente){
 			array_push($proyectos, clone $cliente);
+			if (!$imprimir && $cont==5) break;
+			else $cont++;
 		}		
 		$this->vistaVars['proyectosxcliente'] = $proyectos;
+		if ($imprimir){
+			$impresiones = new impresionesController($this->conexion);
+			$impresiones->reporteProyectosImpresiones('Cantidad de Proyectos por Cliente', $proyectos);
+		}
 	}
 	
-	private function ingresosPorCliente(){
+	function ingresosPorClienteInformes($imprimir = false){
 		$clientes = new cliente($this->conexion);
 		$clientes->buscar('BAJA', 0);		
 		$proyectos = array(); 
+		$cont = 0;
 		foreach($clientes->iterador() as $cliente){
 			array_push($proyectos, clone $cliente);
+			if (!$imprimir && $cont==5) break;
+			else $cont++;
 		}		
 		$this->vistaVars['ingresosxcliente'] = $proyectos;
+		if ($imprimir){
+			$impresiones = new impresionesController($this->conexion);
+			$impresiones->reporteRankingImpresiones('Ingresos por Cliente', $proyectos);
+		}
 	}
 
 }
