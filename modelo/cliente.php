@@ -76,7 +76,7 @@ class cliente extends dataset{
 	function	getCuit(){
 		return $this->CUIT;
 	}
-		
+	
 	function setCondicion($condicion){
 		$this->CONDICION = $condicion;
 	}
@@ -84,7 +84,7 @@ class cliente extends dataset{
 	function getCondicion(){
 		return $this->CONDICION;
 	}
-		
+	
 	function getCondicionText(){
 		switch($this->CONDICION){
 			case 0: return 'Consumidor Final'; break;
@@ -94,18 +94,66 @@ class cliente extends dataset{
 		}
 	}
 	
-	function updateProyecto($id, $nombre, $descripcion){
+	function setBaja($baja){
+		$this->BAJA = $baja;
+	}
+	
+	function isBaja(){
+		return $this->BAJA;
+	}
+	
+	function updateProyecto($id, $fecha, $nombre, $descripcion){
 		$proyectos = new proyecto($this->conexion);
 		if(!$proyectos->buscar('ID', $id)) $proyectos->nuevo();		
+		$proyectos->setFecha($fecha);
 		$proyectos->setNombre($nombre);
 		$proyectos->setDescripcion($descripcion);
 		$proyectos->setCliente_id($this->ID);
+		$proyectos->setBaja(false);
 		if($proyectos->getId()==null) $proyectos->insertar();
 		else $proyectos->modificar();
 	}
 	
 	function getProyectos(){
-		return $this->getChilds('proyecto', 'CLIENTE_ID');
+		$retorno = array();
+		$proyectos = $this->getChilds('proyecto', 'CLIENTE_ID');
+		foreach($proyectos as $proyecto)
+			if (!$proyecto->isBaja()) array_push($retorno, clone $proyecto);
+			
+		return $retorno;		
+	}
+	
+	function getImporteFacturacionTotal(){
+		$total  = 0;
+		foreach($this->getProyectos() as $proyecto){
+			foreach($proyecto->getFacturas() as $factura){
+				$total += $factura->getImporte();
+			}			
+		}
+		
+		return $total;
+	}
+	
+	function getProyectosPorc(){
+		$total = 0;
+		$informe = new cliente($this->conexion);
+		$informe->buscar('BAJA', 0);
+		foreach($informe->iterador() as $cliente){
+			$total += count($cliente->getProyectos());
+		}		
+		return $total > 0?(int)(count($this->getProyectos()) * 100 / $total): 0;
+	}
+	
+	function getIngresosPorc(){
+		$total = 0;
+		$informe = new cliente($this->conexion);
+		$informe->buscar('BAJA', 0);
+		foreach($informe->iterador() as $cliente){
+			$total += $cliente->getImporteFacturacionTotal();
+		}		
+		
+		//echo $this->getImporteFacturacionTotal().' '.$total;
+		return $total > 0?(int)($this->getImporteFacturacionTotal() * 100 / $total): 0;
 	}
 
 

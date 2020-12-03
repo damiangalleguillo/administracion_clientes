@@ -6,7 +6,7 @@ class facturaController extends controlador{
 		$facturas->traerRegistros();
 		
 		$clientes = new cliente($this->conexion);
-		$clientes->traerRegistros();
+		$clientes->buscar('BAJA', false);
 		
 		$this->vistaVars['facturas'] = $facturas;
 		$this->vistaVars['clientes'] = $clientes;
@@ -18,12 +18,13 @@ class facturaController extends controlador{
 		if($proyecto->buscar('ID', $proyecto_id)){
 			$proyecto->addFactura($hdc, $hdi, $hcc, $hci, $fecha);
 		}		
+		$this->redireccionar('factura');
 	}
 	
 	function anularFactura($id){
 		$factura = new factura($this->conexion);
 		if($factura->buscar('ID', $id)){
-			$factura->setAnulado();
+			$factura->setAnulado(true);
 			$factura->modificar();
 		}	
 		$this->redireccionar('factura');

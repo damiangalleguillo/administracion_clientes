@@ -1,17 +1,24 @@
+/*variables*/
+:root{
+	--progress-color: rgb(32, 188, 238);
+	--progress-bgcolor: rgb(222, 222, 222);
+	--input-bgcolor: rgb(240, 240, 240);
+	--hint-bg-color: rgb(255, 255, 255);
+}
+
+/*fin variables*/
+
+
 /*base*/
 body{
 	margin:0;
 	background-color: rgb(50, 50, 50);
 }
-
-.disabled{
-	background-color: rgb(240, 240, 240);
-}
 /*fin base*/
 
 /*botones*/
 button, input[type=submit], input[type=reset]{
-	background-color: rgb(240, 240, 240);
+	background-color: var(--input-bgcolor);
 	border: solid 1px gray;
 	padding: 5px;	
 	font-size: 12;
@@ -34,14 +41,14 @@ button:focus, input[type=submit]:focus, input[type=reset]:focus{
 table{
 	border-collapse: collapse; 
 	width: 100%;
-	background-color: rgb(240, 240, 240);
+	background-color: var(--input-bgcolor);
 	font-family: sans-serif;
 	font-size: 12;		 
 	border: black 1px solid;
 }
 
 th{
-	background-color: rgb(240, 240, 240);
+	background-color: var(--input-bgcolor);
 	font-weight: normal;
 	border: solid 1px black;
 	margin:0;
@@ -50,7 +57,7 @@ th{
 
 td{
 	background-color: transparent;
-	border: solid 1px rgb(240, 240, 240);
+	border: solid 1px var(--input-bgcolor);
 	max-height:10px;
 }
 
@@ -58,6 +65,8 @@ tr{
 	background-color: white;	
 	height: 20px;
 }
+
+
 
 tr:hover{
 	background-color: rgb(0, 120, 215);
@@ -71,24 +80,19 @@ tr:hover{
 
 td input, td select{
 	width: 100%;
-	border: 0!important;
 }
 
 /*fin tablas (grillas)*/
 
 
 /*cuadros de texto*/
-input[type=text], input[type=password], input[type=number], input[type=date], select, textarea{
+input[type=text], input[type=password], input[type=number], input[type=date], select{
 	border:solid 1px black;
 	font-family: sans-serif;
 	height:25px;
 }
 
-textarea{
-	height:75px;
-}
-
-input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=date]:hover, select:hover, textarea:hover{
+input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=date]:hover, select:hover{
 	border:solid 1px rgb(0, 120, 215);
 }
 
@@ -96,7 +100,7 @@ input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, in
 
 /*marcos*/
 fieldset{
-	background-color: rgb(240, 240, 240);
+	background-color: var(--input-bgcolor);
 	margin: 0 5% 10px 5%;
 }
 
@@ -107,7 +111,7 @@ fieldset > legend{
 
 /*ventana*/
 .ventana{	
-	background-color: rgb(240, 240, 240);
+	background-color: var(--input-bgcolor);
 	border: solid 8px rgb(0, 120, 215);
 	border-top: none;
 	text-align: center;
@@ -162,27 +166,27 @@ fieldset > legend{
 .col12{ column-count: 12;}
 
 
-.ventana-fila{
+.ventana-fila{	
 	display: flex; 
 	flex-wrap: no-wrap; 
 	flex-direction: row;	
-	height: 30px;
+	height: 25px;
+	margin-bottom: 10px;	
+	align-items: stretch;
 } 
 
 .ventana-fila input[type=text],
 .ventana-fila input[type=password], 
 .ventana-fila input[type=number],
 .ventana-fila input[type=date],
-.ventana-fila select,
-.ventana-fila textarea{
+.ventana-fila select{
 	width: 100%;
-	margin-right: 2px;
-	margin-top: 3px;
+	margin-right: 3px;		
 }
 
-.ventana-fila label{
+.ventana-fila label{	
 	width: auto!important;
-	margin-top: 3px;
+	margin-top: 3px;			
 }
 
 .ventana-grupo > label{	
@@ -194,8 +198,7 @@ fieldset > legend{
 .ventana-grupo > input[type=number],
 .ventana-grupo > input[type=date],
 .ventana-grupo > select, 
-.ventana-grupo > label, 
-.ventana-grupo > textarea{
+.ventana-grupo > label{
 	display: inline-block;
 	margin-left: 0;
 	width: 100%;
@@ -454,9 +457,18 @@ ul[class=checklist]{
 .menuopciones hr, .menuusuario hr{
 	border: 1px solid gray;
 }
+ .menuopciones a, .menuusuario a{
+	 background-image: url('opcion.png');
+ }
  
-.menuopciones a, .menuusuario a{
-  background-image: url('opcion.png');
+a.menu-opcion{
+	font-family: segoe ui;
+	font-size: 11;
+	background-color: rgb(60, 60, 60);	
+	cursor: pointer;
+} 
+ 
+a.menu-opcion, .menuopciones a, .menuusuario a{  
   background-repeat: no-repeat;
   background-position: left;
   text-indent: 32px;
@@ -469,7 +481,7 @@ ul[class=checklist]{
   padding: 5px 0 0 5px;
 }
 
-.menuopciones a:hover, .menuusuario a:hover{
+a.menu-opcion:hover, .menuopciones a:hover, .menuusuario a:hover{
   background-color: rgb(101, 101, 101);
   text-decoration: none;
   display: block;
@@ -600,4 +612,421 @@ ul[class=checklist]{
 	height: 100px;
 }
 /*fin botones metro*/
+
+/*slide panel*/
+.informer-frame{
+	background-color: rgb(42, 129, 172);
+	position: absolute;
+	top: 50px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.informer-frame .informer-panel{
+	position: relative;
+	float: left;
+	width: 200px;
+	height:100%;
+	background-color: rgb(50, 50, 50);
+}
+
+.informer-frame .informer-panel ul {
+	list-style-type: none;
+	margin: 50 0 0 0;
+	padding: 0;
+}
+
+.informer-frame .informer-content{
+	position: fixed;
+	float: left;		
+	top: 50;	
+	left: 200;
+	right: 0;
+	bottom: 0;
+	padding: 10px;
+}   
+
+.informer-frame .graph-box{
+	background-color: white;	
+	width: 260px;
+	height: 130px;
+	display: inline-table;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	transition: all 1s ease;	
+	cursor: pointer;
+} 
+
+.informer-frame .graph-box .graph-box-content{
+	display: none;
+}
+
+.informer-frame .graph-box:hover .graph-box-content{
+	display: block;
+}
+
+.informer-frame .graph-box:hover{
+	height: 390px;
+	transition: all 1s ease;
+}
+
+.informer-frame .graph-box .graph-box-title{
+	font-family: segoe ui;
+	font-size: 16;	
+	margin: 10px;
+}
+
+@media screen and (max-width: 600px) {
+	.informer-frame .informer-panel{
+		width: 100%;
+	}
+	
+	.informer-frame .informer-content{
+		position: absolute;		
+		left: 0;
+	}
+}
+
+/*fin slide panel*/
+
+/*gauges*/
+.gauge-circular > span{
+	background-color: white;
+	width: 60%;
+	height: 60%;
+	top: 20%;
+	left: 20%;					
+	position: absolute;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 5em;
+	z-index: 10;
+}
+				
+.gauge-circular{
+	background-color: white;
+	width: 100px;
+	height: 100px; 					
+	border-radius: 50%;					
+	position: relative;					
+}
+				
+.gauge-circular:before, .gauge-circular:after{
+	content: "";
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	position: absolute;
+	top: 0;
+	left: 0;					
+}
+					
+.gauge-circular:before{					
+	clip-path: inset(0% 0% 0% 50%);
+	background: linear-gradient(calc(calc(360deg * 0 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);
+}
+				
+.gauge-circular:after{					
+	clip-path: inset(0% 50% 0% 0%);
+	background: linear-gradient(calc(calc(360deg * 0 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);
+} 
+
+	
+.gauge-circular[data-progres="0"]:after{
+	background: linear-gradient(calc(calc(360deg * 0 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="1"]:after{
+	background: linear-gradient(calc(calc(360deg * 1 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="2"]:after{
+	background: linear-gradient(calc(calc(360deg * 2 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="3"]:after{
+	background: linear-gradient(calc(calc(360deg * 3 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}
+.gauge-circular[data-progres="4"]:after{
+	background: linear-gradient(calc(calc(360deg * 4 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}
+.gauge-circular[data-progres="5"]:after{
+	background: linear-gradient(calc(calc(360deg * 5 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}
+.gauge-circular[data-progres="6"]:after{
+	background: linear-gradient(calc(calc(360deg * 6 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}
+.gauge-circular[data-progres="7"]:after{
+	background: linear-gradient(calc(calc(360deg * 7 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}
+.gauge-circular[data-progres="8"]:after{
+	background: linear-gradient(calc(calc(360deg * 8 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}
+.gauge-circular[data-progres="9"]:after{
+	background: linear-gradient(calc(calc(360deg * 9 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}		
+.gauge-circular[data-progres="10"]:after{
+	background: linear-gradient(calc(calc(360deg * 10 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="11"]:after{
+	background: linear-gradient(calc(calc(360deg * 11 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="12"]:after{
+	background: linear-gradient(calc(calc(360deg * 12 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="13"]:after{
+	background: linear-gradient(calc(calc(360deg * 13 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="14"]:after{
+	background: linear-gradient(calc(calc(360deg * 14 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="15"]:after{
+	background: linear-gradient(calc(calc(360deg * 15 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="16"]:after{
+	background: linear-gradient(calc(calc(360deg * 16 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="17"]:after{
+	background: linear-gradient(calc(calc(360deg * 17 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="18"]:after{
+	background: linear-gradient(calc(calc(360deg * 18 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="19"]:after{
+	background: linear-gradient(calc(calc(360deg * 19 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="20"]:after{
+	background: linear-gradient(calc(calc(360deg * 20 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 	
+.gauge-circular[data-progres="21"]:after{
+	background: linear-gradient(calc(calc(360deg * 21 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="22"]:after{
+	background: linear-gradient(calc(calc(360deg * 22 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="23"]:after{
+	background: linear-gradient(calc(calc(360deg * 23 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="24"]:after{
+	background: linear-gradient(calc(calc(360deg * 24 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="25"]:after{
+	background: linear-gradient(calc(calc(360deg * 25 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 				
+.gauge-circular[data-progres="26"]:after{
+	background: linear-gradient(calc(calc(360deg * 26 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="27"]:after{
+	background: linear-gradient(calc(calc(360deg * 27 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="28"]:after{
+	background: linear-gradient(calc(calc(360deg * 28 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="29"]:after{
+	background: linear-gradient(calc(calc(360deg * 29 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="30"]:after{
+	background: linear-gradient(calc(calc(360deg * 30 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="31"]:after{
+	background: linear-gradient(calc(calc(360deg * 31 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="32"]:after{
+	background: linear-gradient(calc(calc(360deg * 32 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="33"]:after{
+	background: linear-gradient(calc(calc(360deg * 33 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="34"]:after{
+	background: linear-gradient(calc(calc(360deg * 34 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="35"]:after{
+	background: linear-gradient(calc(calc(360deg * 35 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="36"]:after{
+	background: linear-gradient(calc(calc(360deg * 36 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="37"]:after{
+	background: linear-gradient(calc(calc(360deg * 37 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="38"]:after{
+	background: linear-gradient(calc(calc(360deg * 38 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="39"]:after{
+	background: linear-gradient(calc(calc(360deg * 39 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 
+.gauge-circular[data-progres="40"]:after{
+	background: linear-gradient(calc(calc(360deg * 40 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 	
+.gauge-circular[data-progres="41"]:after{
+	background: linear-gradient(calc(calc(360deg * 41 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 	
+.gauge-circular[data-progres="42"]:after{
+	background: linear-gradient(calc(calc(360deg * 42 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 	
+.gauge-circular[data-progres="43"]:after{
+	background: linear-gradient(calc(calc(360deg * 43 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="44"]:after{
+	background: linear-gradient(calc(calc(360deg * 44 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="45"]:after{
+	background: linear-gradient(calc(calc(360deg * 45 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="46"]:after{
+	background: linear-gradient(calc(calc(360deg * 46 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="47"]:after{
+	background: linear-gradient(calc(calc(360deg * 47 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="48"]:after{
+	background: linear-gradient(calc(calc(360deg * 48 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="49"]:after{
+	background: linear-gradient(calc(calc(360deg * 49 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 		
+.gauge-circular[data-progres="50"]:after{
+	background: linear-gradient(calc(calc(360deg * 50 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);} 	
+
+.gauge-circular[data-progres="51"]:after, .gauge-circular[data-progres="71"]:after,
+.gauge-circular[data-progres="52"]:after, .gauge-circular[data-progres="72"]:after,
+.gauge-circular[data-progres="53"]:after, .gauge-circular[data-progres="73"]:after,
+.gauge-circular[data-progres="54"]:after, .gauge-circular[data-progres="74"]:after,
+.gauge-circular[data-progres="55"]:after, .gauge-circular[data-progres="75"]:after,
+.gauge-circular[data-progres="56"]:after, .gauge-circular[data-progres="76"]:after,
+.gauge-circular[data-progres="57"]:after, .gauge-circular[data-progres="77"]:after,
+.gauge-circular[data-progres="58"]:after, .gauge-circular[data-progres="78"]:after,
+.gauge-circular[data-progres="59"]:after, .gauge-circular[data-progres="79"]:after,
+.gauge-circular[data-progres="60"]:after, .gauge-circular[data-progres="80"]:after,
+.gauge-circular[data-progres="61"]:after, .gauge-circular[data-progres="81"]:after,
+.gauge-circular[data-progres="62"]:after, .gauge-circular[data-progres="82"]:after,
+.gauge-circular[data-progres="63"]:after, .gauge-circular[data-progres="83"]:after,
+.gauge-circular[data-progres="64"]:after, .gauge-circular[data-progres="84"]:after,
+.gauge-circular[data-progres="65"]:after, .gauge-circular[data-progres="85"]:after,
+.gauge-circular[data-progres="66"]:after, .gauge-circular[data-progres="86"]:after,
+.gauge-circular[data-progres="67"]:after, .gauge-circular[data-progres="87"]:after,
+.gauge-circular[data-progres="68"]:after, .gauge-circular[data-progres="88"]:after,
+.gauge-circular[data-progres="69"]:after, .gauge-circular[data-progres="89"]:after,
+.gauge-circular[data-progres="70"]:after, .gauge-circular[data-progres="90"]:after,
+.gauge-circular[data-progres="91"]:after, .gauge-circular[data-progres="92"]:after,
+.gauge-circular[data-progres="93"]:after, .gauge-circular[data-progres="94"]:after,
+.gauge-circular[data-progres="95"]:after, .gauge-circular[data-progres="96"]:after,
+.gauge-circular[data-progres="97"]:after, .gauge-circular[data-progres="98"]:after,
+.gauge-circular[data-progres="99"]:after, .gauge-circular[data-progres="100"]:after{
+	background: linear-gradient(calc(calc(360deg * 50 / 100) + 90deg), var(--progress-bgcolor) 50%, var(--progress-color) 50%);}	
+	
+.gauge-circular[data-progres="51"]:before{
+	background: linear-gradient(calc(calc(360deg * 1 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="52"]:before{
+	background: linear-gradient(calc(calc(360deg * 2 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="53"]:before{
+	background: linear-gradient(calc(calc(360deg * 2 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="54"]:before{
+	background: linear-gradient(calc(calc(360deg * 3 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="55"]:before{
+	background: linear-gradient(calc(calc(360deg * 5 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="56"]:before{
+	background: linear-gradient(calc(calc(360deg * 6 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="57"]:before{
+	background: linear-gradient(calc(calc(360deg * 7 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="58"]:before{
+	background: linear-gradient(calc(calc(360deg * 8 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="59"]:before{
+	background: linear-gradient(calc(calc(360deg * 9 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="60"]:before{
+	background: linear-gradient(calc(calc(360deg * 10 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="61"]:before{
+	background: linear-gradient(calc(calc(360deg * 11 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="62"]:before{
+	background: linear-gradient(calc(calc(360deg * 12 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="63"]:before{
+	background: linear-gradient(calc(calc(360deg * 13 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="64"]:before{
+	background: linear-gradient(calc(calc(360deg * 14 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="65"]:before{
+	background: linear-gradient(calc(calc(360deg * 15 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="66"]:before{
+	background: linear-gradient(calc(calc(360deg * 16 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="67"]:before{
+	background: linear-gradient(calc(calc(360deg * 17 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="68"]:before{
+	background: linear-gradient(calc(calc(360deg * 18 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="69"]:before{
+	background: linear-gradient(calc(calc(360deg * 19  / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="70"]:before{
+	background: linear-gradient(calc(calc(360deg * 20 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="71"]:before{
+	background: linear-gradient(calc(calc(360deg * 21 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="72"]:before{
+	background: linear-gradient(calc(calc(360deg * 22 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="73"]:before{
+	background: linear-gradient(calc(calc(360deg * 23 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="74"]:before{
+	background: linear-gradient(calc(calc(360deg * 24 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}			
+.gauge-circular[data-progres="75"]:before{
+	background: linear-gradient(calc(calc(360deg * 25 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}
+.gauge-circular[data-progres="76"]:before{
+	background: linear-gradient(calc(calc(360deg * 26 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="77"]:before{
+	background: linear-gradient(calc(calc(360deg * 27 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="78"]:before{
+	background: linear-gradient(calc(calc(360deg * 28 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="79"]:before{
+	background: linear-gradient(calc(calc(360deg * 29 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+.gauge-circular[data-progres="80"]:before{
+	background: linear-gradient(calc(calc(360deg * 30 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="81"]:before{
+	background: linear-gradient(calc(calc(360deg * 31 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="82"]:before{
+	background: linear-gradient(calc(calc(360deg * 32 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="83"]:before{
+	background: linear-gradient(calc(calc(360deg * 33 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="84"]:before{
+	background: linear-gradient(calc(calc(360deg * 34 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="85"]:before{
+	background: linear-gradient(calc(calc(360deg * 35 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="86"]:before{
+	background: linear-gradient(calc(calc(360deg * 36 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="87"]:before{
+	background: linear-gradient(calc(calc(360deg * 37 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="88"]:before{
+	background: linear-gradient(calc(calc(360deg * 38 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="89"]:before{
+	background: linear-gradient(calc(calc(360deg * 39 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="90"]:before{
+	background: linear-gradient(calc(calc(360deg * 40 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="91"]:before{
+	background: linear-gradient(calc(calc(360deg * 41 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="92"]:before{
+	background: linear-gradient(calc(calc(360deg * 42 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="93"]:before{
+	background: linear-gradient(calc(calc(360deg * 43 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="94"]:before{
+	background: linear-gradient(calc(calc(360deg * 44 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="95"]:before{
+	background: linear-gradient(calc(calc(360deg * 45 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="96"]:before{
+	background: linear-gradient(calc(calc(360deg * 46 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="97"]:before{
+	background: linear-gradient(calc(calc(360deg * 47 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="98"]:before{
+	background: linear-gradient(calc(calc(360deg * 48 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="99"]:before{
+	background: linear-gradient(calc(calc(360deg * 49 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}	
+.gauge-circular[data-progres="100"]:before{
+	background: linear-gradient(calc(calc(360deg * 50 / 100) + 90deg), var(--progress-color) 50%, var(--progress-bgcolor) 50%);}		
+/*fin gauges*/
+
+
+/*grafico de barras*/
+.graph-bar{
+	width: 200px;	
+	height: 150px;
+	position: relative;
+}
+
+.graph-bar:before{
+	content: "";
+	width: 10px;
+	height: 100%;
+	border-right: 1px solid black;		
+	position: absolute;	
+}
+
+.graph-bar:after{
+	content: "";
+	width: 110%;
+	height: 10px;
+	border-top: 1px solid black;
+	position: absolute;
+	bottom: 0;	
+}
+
+.graph-bar .bar{
+	border: 1px solid black;
+	min-height: 10px;
+	display: block;
+	width: 100%;
+	margin: 2.5 0 2.5 0;				
+	margin-left: 14px; 
+	background-color: var(--progress-color);
+	font-size: 14px;
+	color: white;
+}
+
+.graph-bar .bar.rojo{background-color: red;}
+.graph-bar .bar.verde{background-color: green;}
+.graph-bar .bar.azul{background-color: blue;}
+.graph-bar .bar.amarillo{background-color: yellow;}
+.graph-bar .bar.rosa{background-color: pink;}
+.graph-bar .bar.naranja{background-color: orange;}
+
+.graph-bar .bar[data-hint]:hover:after { 
+	content: attr(data-hint); 	
+	font-size: 12px;
+	border: 1px solid black;
+	color: black;
+	background-color: var(--hint-bg-color);	
+}
+
+.graph-bar.vertical{
+	
+}
+
+.graph-bar.vertical:before{
+
+}
+
+.graph-bar.vertical:after{
+
+}
+/*fin grafico de barras*/
 

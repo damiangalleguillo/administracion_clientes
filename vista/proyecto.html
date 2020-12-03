@@ -18,10 +18,10 @@
 	</table>
 	</fieldset>
 	<div class="ventana-botonera">
-		<button onclick="ID.value = ''; proyectoFrom.reset(); mostrar('abmproyecto')">Agregar</button>
-		<button>Eliminar</button>
+		<button onclick="nuevo(-1)">Agregar</button>
+		<button onclick="if (confirm('Seguro desea eliminar este Registro?') && ID.value != '') window.location = 'proyecto/eliminar?id='+ID.value">Eliminar</button>
 		<button onclick="mostrar('abmproyecto')">Modificar</button>
-		<button onclick="mostrar('listadoproyectos')">Facturas</button>
+		<button onclick="cargarFacturas(ID.value)">Facturas</button>
 	</div>
 </div>
 
@@ -31,10 +31,13 @@
 		<input type="hidden" name="id" id="ID">
 		<label>Cliente</label>
 		<select name="cliente_id" id="CLIENTE_ID">
+			<option value="-1" disabled selected hidden>Seleccione un Cliente</option>
 			@foreach cliente in clientes->iterador()
 			<option value="{{cliente->getId()}}">{{cliente->getNombreCompleto()}}</option>
 			@endforeach
 		</select>		
+		<label>Fecha</label>
+		<input type="date" name="fecha" id="FECHA" value="{{fecha}}">
 		<label>Nombre</label>
 		<input type="text" name="nombre" id="NOMBRE">
 		<label>Descripcion</label>
@@ -45,3 +48,46 @@
 		</div>
 	</form>
 </div>
+
+<div id="listadofacturas" class="ventana" style="margin-top: 50px;" data-onclose="window.location = ''">
+	<div class="ventana-titulo">Facturas</div>
+	<div class="ventana-grupo" style="height:350px;">
+		<table id="tablafacturas">
+			<thead><tr><th>Fecha</th><th>Numero</th><th>Cliente</th><th>Importe</th></tr></thead>
+			<tbody></tbody>
+			<tfoot></tfoot>
+		</table>
+	</div>
+	<div class="ventana-botonera">				
+		<button onclick="ocultar('listadofacturas')">Cerrar</button>
+	</div>
+</div>
+
+<script>
+var clt_id  = {{clt_id}};
+if (clt_id != '') nuevo(clt_id);
+
+function nuevo(cliente){
+	ID.value = ''; 
+	proyectoFrom.reset(); 
+	CLIENTE_ID.value = cliente;
+	mostrar('abmproyecto');	
+}
+
+function cargarFacturas(proyecto){
+	llamadaAJAX('proyecto/getfacturas?noweb&id='+proyecto, 'get', 
+		function(obj){
+			resp = JSON.parse(obj.responseText);				
+			for(let i=tablafacturas.rows.length-1; i>0; i--) tablafacturas.deleteRow(i);
+			resp.forEach(x => {
+				const fila = tablafacturas.insertRow();
+				fila.insertCell().innerHTML = x.fecha;
+				fila.insertCell().innerHTML = x.numero;
+				fila.insertCell().innerHTML = x.cliente;
+				fila.insertCell().innerHTML = '$'+x.importe;
+			});
+			mostrar('listadofacturas');
+		
+		});
+}
+</script>

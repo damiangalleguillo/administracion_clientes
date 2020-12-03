@@ -10,6 +10,18 @@ class proyecto extends dataset{
 	function setId($Id){
  		$this->ID = $Id;
 	}
+	
+	function setFecha($fecha){
+		$this->FECHA = $fecha;
+	}
+	
+	function getFecha(){
+		return date('Y-m-d', strtotime($this->FECHA));
+	}
+	
+	function getFechaUser(){
+		return date('d/m/Y', strtotime($this->FECHA));
+	}
 
 	function getNombre(){
  		return $this->NOMBRE;
@@ -43,6 +55,14 @@ class proyecto extends dataset{
 		return $this->getParent('cliente', 'CLIENTE_ID')->getNombreCompleto();
 	}
 	
+	function setBaja($baja){
+		$this->BAJA = $baja;
+	}
+	
+	function isBaja(){
+		return $this->BAJA;
+	}
+	
 	function addFactura($hdc, $hdi, $hcc, $hci, $fecha){
 		$factura = new factura($this->conexion);
 		$factura->setFecha($fecha);
@@ -50,9 +70,29 @@ class proyecto extends dataset{
 		$factura->setHs_capacitacion_imp($hci);
 		$factura->setHs_desararollo_cant($hdc);
 		$factura->setHs_desararollo_imp($hdi);
+		$factura->setTipo($this->getTipoFact());
 		$factura->setProyecto_id($this->ID);
 		$factura->setUsuario_id(usuario::getId());
+		$factura->setAnulado(false);
 		$factura->insertar();
+	}
+	
+	function getFacturas(){
+		$retorno = array();
+		$facturas = $this->getChilds('factura', 'PROYECTO_ID');
+		foreach($facturas as $factura)
+			if (!$factura->isAnulado()) array_push($retorno, clone $factura);
+			
+		return $retorno;
+	}
+	
+	private function getTipoFact(){
+		switch($this->getCliente()->getCondicion()){
+			case 0: return 'B'; break;
+			case 1: return 'B'; break;
+			case 2: return 'A'; break;
+			case 3: return 'B'; break;
+		}
 	}
 
 }

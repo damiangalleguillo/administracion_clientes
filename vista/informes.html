@@ -1,0 +1,64 @@
+<div class="informer-frame">
+	<div class="informer-panel">
+		<ul>
+
+		</ul>
+	</div>
+	<div class="informer-content">
+		<div class="graph-box">
+			<div class="graph-box-title">Proyectos sin Facturar</div>
+				<div class="gauge-circular" data-progres="{{sinfacturar}}" style="width: 75px; height: 75px; margin-left: 10px;"><span style="line-height: 3;">{{sinfacturar}}%</span></div>			
+				<div class="graph-box-content">
+					<table>
+						<thead><tr><th>Fecha</th><th>Cliente</th><th>Proyecto</th></tr></thead>
+						<tbody>
+						@foreach factura in sinfacturar_fact
+							<tr><td>{{factura->getFechaUser()}}</td><td>{{factura->getClienteNombre()}}</td></td><td>{{factura->getNombre()}}</td></tr>
+						@endforeach
+						</tbody>
+					</table>
+				</div>
+		</div>
+		<div class="graph-box">
+			<div class="graph-box-title">Proyectos por Año</div>
+			<div class="graph-bar">
+			@foreach proyecto in proyectporperiod
+				<div class="bar" data-hint="{{proyecto->getPeriodo()}}" style="width: {{proyecto->getPorcentaje()}}%;">{{proyecto->getPorcentaje()}}%</div>
+			@endforeach				
+			</div>
+			<div class="graph-box-content">
+				Porcentaje de proyectos iniciados por periodo anual.
+			</div>
+		</div>
+		<div class="graph-box">
+			<div class="graph-box-title">Proyectos por Cliente</div>
+			<div class="graph-bar">
+			@foreach cliente in proyectosxcliente
+				<div class="bar" data-hint="{{cliente->getNombreCompleto()}}" style="width: {{cliente->getProyectosPorc()}}%;"> {{cliente->getProyectosPorc()}}%</div>
+			@endforeach
+			</div>
+			<div class="graph-box-content">
+				Porcentaje de proyectos iniciados por Clientes.
+			</div>
+		</div>
+		<div class="graph-box">
+			<div class="graph-box-title">Rank de Clientes</div>
+			<div class="graph-bar">
+			@foreach cliente in ingresosxcliente
+				<div class="bar" data-hint="{{cliente->getNombreCompleto()}}" style="width: {{cliente->getIngresosPorc()}}%;">{{cliente->getIngresosPorc()}}%</div>
+			@endforeach
+			</div>
+			<div class="graph-box-content">
+				Ranking de Clientes por ingresos generados a la empresa.
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+function porcentaje(p){
+	por.dataset.progres = p;
+	portxt.innerHTML = p+'%';
+}
+
+</script>

@@ -4,6 +4,7 @@ class clienteController extends controlador{
 	function index($busqueda=''){
 		$clientesList = '';
 		$clientes = new cliente($this->conexion);
+		$clientes->buscar('BAJA', false);		
 		$clientes->buscar('APELLIDO', $busqueda, false, true);		
 		//$clientes->buscar('NOMBRES', $busqueda, false, true);		
 		$this->vistaVars = array('clientes' => $clientes);
@@ -22,6 +23,7 @@ class clienteController extends controlador{
 		$cliente->setLocalidad($localidad);
 		$cliente->setCuit($cuit);
 		$cliente->setCondicion($condicion);
+		$cliente->setBaja(false);
 		if ($cliente->getId() == null) $cliente->insertar();
 		$cliente->modificar();
 		
@@ -33,6 +35,26 @@ class clienteController extends controlador{
 		$cliente->buscar('ID', $id);
 		$cliente->registrosXML();
 	}
+	
+	function eliminarCliente($id){
+		$cliente = new cliente($this->conexion);
+		$cliente->buscar('ID', $id);
+		$cliente->setBaja(true);
+		$cliente->modificar();
+		$this->redireccionar('cliente');
+	}
+	
+	function getProyectosCliente($id){
+		$respuesta = array();
+		$cliente = new cliente($this->conexion);
+		$cliente->buscar('ID', $id);
+		foreach($cliente->getProyectos() as $proyecto){
+			array_push($respuesta, array('id' => $proyecto->getId(), 'nombre' => $proyecto->getNombre(), 'fecha' => $proyecto->getFecha()));
+		}
+		
+		echo json_encode($respuesta);
+	}
+	
 
 }
 ?>

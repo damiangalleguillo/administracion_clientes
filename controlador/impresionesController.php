@@ -81,28 +81,31 @@ class impresionesController extends controlador{
 		$reporte->Cell(15, 8, number_format($factura->getIva(), 2), 0, 0, 'R');
 		$reporte->Cell(25, 8,  number_format($factura->getHs_capacitacion_cant() *  $factura->getHs_capacitacion_imp(), 2), 0, 1, 'R');	
 		$reporte->SetX(5);
-		$reporte->Line($reporte->x, $reporte->y, $reporte->x+200, $reporte->y);
+		$reporte->Line($reporte->getX(), $reporte->getY(), $reporte->getX()+200, $reporte->getY());
 		
 		$reporte->Rect(5, 240, 200, 40, 'D');
 		$reporte->SetXY(5, 240);
 		$reporte->SetFontSize(12);
-		$reporte->Cell(15, 8, 'Neto Gravado: '.number_format($factura->getIva(), 2), 0, 0, 'L');
+		$reporte->Cell(15, 8, 'Neto Gravado: $'.number_format($factura->getNetoGravado(), 2), 0, 0, 'L');
 		
 		$reporte->SetXY(5, 245);
-		$reporte->Cell(15, 18, 'I.V.A. 21%: '.number_format($factura->getIva(), 2), 0, 0, 'L');
+		$reporte->Cell(15, 18, 'I.V.A. 21%: $'.number_format($factura->getNetoIva(), 2), 0, 0, 'L');
 		$reporte->SetXY(5, 250);
 		$reporte->Cell(200, 18, 'Importe Total: $'.number_format($factura->getImporte(), 2), 0, 0, 'R');
 		$reporte->SetXY(5, 255);
 		$reporte->Cell(200, 18, 'Son: pesos '.ucfirst(strtolower($this->aLetras($factura->getImporte()))), 0, 0, 'R');
+		$reporte->Cell(200, 18, 'Importe Total: $'.number_format($factura->getImporte(), 2), 0, 0, 'R');
 		
 		$reporte->output('archivo.pdf', 'i');	
+		
 	}
 	
 	function aLetras($numero){		
 		$formatter = new NumeroALetras;
 
         return $formatter->toWords($numero);		
-	}
+	}	
+
 }
 
 ?>

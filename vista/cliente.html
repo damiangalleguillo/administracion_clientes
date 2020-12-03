@@ -19,9 +19,9 @@
 	</fieldset>
 	<div class="ventana-botonera">
 		<button onclick="ID.value = ''; clientesForm.reset(); mostrar('abmclientes')">Agregar</button>
-		<button>Eliminar</button>
+		<button onclick="if (confirm('Seguro desea eliminar este Registro?') && ID.value != '') window.location = 'cliente/eliminar?id='+ID.value">Eliminar</button>
 		<button onclick="mostrar('abmclientes')">Modificar</button>
-		<button onclick="mostrar('listadoproyectos')">Proyectos</button>
+		<button onclick="cargarProyectos(ID.value)">Proyectos</button>
 	</div>
 </div>
 
@@ -63,14 +63,32 @@
 	<div class="ventana-titulo">Proyectos de Clientes</div>
 	<fieldset>
 	<legend>Proyectos</legend>
-	<table style="height: 250px">
+	<table id="tablaproyectos" style="height: 250px">
 		<thead><tr><th>Fecha</th><th>Nombre</th></tr></thead>
 		<tbody></tbody>
 		<tfoot></tfoot>
 	</table>
 	</fieldset>
 	<div class="ventana-botonera">
-		<button>Nuevo</button>
+		<button onclick="window.location = 'proyecto/nuevo?id='+ID.value">Nuevo</button>
 		<button onclick="ocultar('listadoproyectos')">Salir</button>
 	</div>
 </div>
+
+<script>
+
+function cargarProyectos(cliente){
+	llamadaAJAX('cliente/getproyectos?noweb&id='+cliente, 'get', 
+		function(obj){
+			resp = JSON.parse(obj.responseText);				
+			for(let i=tablaproyectos.rows.length-1; i>0; i--) tablaproyectos.deleteRow(i);
+			resp.forEach(x => {
+				const fila = tablaproyectos.insertRow();
+				fila.insertCell().innerHTML = x.fecha;
+				fila.insertCell().innerHTML = x.nombre;
+			});
+			mostrar('listadoproyectos');
+		
+		});
+}
+</script>
