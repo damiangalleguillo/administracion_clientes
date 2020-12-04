@@ -49,6 +49,8 @@ class moduloDeDatos{
 							  break;
 			case 'datetime': return 's';
 							  break;
+			case 'bigint': return 'i';
+							   break;		
 			case 'int': return 'i';
 						   break;
 			case 'smallint': return 'i';
@@ -78,8 +80,9 @@ class moduloDeDatos{
 			}
 			
 			$stmt->execute();
-			return $stmt->get_result();
+			$retorno = $stmt->get_result();
 			$stmt->close();
+			return $retorno;
 	}
 	
 	function ultimo_id(){

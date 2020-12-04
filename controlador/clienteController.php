@@ -53,7 +53,8 @@ class clienteController extends controlador{
 		$cliente = new cliente($this->conexion);
 		$cliente->buscar('ID', $id);
 		foreach($cliente->getProyectos() as $proyecto){
-			array_push($respuesta, array('id' => $proyecto->getId(), 'nombre' => $proyecto->getNombre(), 'fecha' => $proyecto->getFecha()));
+			array_push($respuesta, array('id' => $proyecto->getId(), 'nombre' => $proyecto->getNombre(), 
+														 'fecha' => $proyecto->getFechaUser(), 'totalfact' => $proyecto->getImporteFacturado()));
 		}
 		
 		echo json_encode($respuesta);
