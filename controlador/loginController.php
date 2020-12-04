@@ -2,7 +2,7 @@
 use Usuario\usuario;
 class loginController extends controlador{
 
-	function index(){
+	function index(){		
 		$this->vistaVars['error'] = '';
 		$this->vistaVars['usr'] = '';
 	}

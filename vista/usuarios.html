@@ -5,7 +5,7 @@
 			<thead><tr><th>Nombre</th></tr></thead>
 			<tbody>
 				@foreach usuario in usuarios->iterador()
-				<tr onclick="seleccionarFila(); cargarFormulario('usuarios/get?noweb&id={{usuario->getId()}}')"><td>{{usuario->getNombre()}}</td></tr>
+				<tr onclick="seleccionarFila(); usuariosForm.reset(); cargarFormulario('usuarios/get?noweb&id={{usuario->getId()}}')"><td>{{usuario->getNombre()}}</td></tr>
 				@endforeach
 			</tbody>
 			<tfoot></tfoot>
@@ -30,6 +30,30 @@
 		<label>Correo Electronico</label>
 		<input type="text" name="email" id="EMAIL">		
 	</div>
+	<fieldset><legend>Permisos</legend>
+	<div class="checklist">
+		<label for="PERMISOSadmclientes">
+			<input type="checkbox" name="permisos[]" id="PERMISOSadmclientes" value="admclientes">
+			Administrar Clientes
+		</label>
+		<label for="PERMISOSadmproyectos">
+			<input type="checkbox" name="permisos[]" id="PERMISOSadmproyectos" value="admproyectos">
+			Administrar Proyectos
+		</label>
+		<label for="PERMISOSadmfacturas">
+			<input type="checkbox" name="permisos[]" id="PERMISOSadmfacturas" value="admfacturas">
+			Administrar Facturas
+		</label>
+		<label for="PERMISOSadmusuarios">
+			<input type="checkbox" name="permisos[]" id="PERMISOSadmusuarios" value="admusuarios">
+			Administrar Usuarios
+		</label>
+		<label for="PERMISOSadminformes">
+			<input type="checkbox" name="permisos[]" id="PERMISOSadminformes" value="adminformes">
+			Visualizar Informes
+		</label>
+	</div>
+	</fieldset>
 	<div class="ventana-botonera">
 		<button>Aceptar</button>
 		<button type="button" onclick="ocultar('abmusuarios')">Modificar</button>

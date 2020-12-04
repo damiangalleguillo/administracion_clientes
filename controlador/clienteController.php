@@ -1,7 +1,11 @@
 <?php
+use Usuario\usuario;
+
 class clienteController extends controlador{
 
 	function index($busqueda=''){
+		if (!usuario::getObj()->getPermiso('admclientes')) $this->redireccionar('#');
+		
 		$clientesList = '';
 		$clientes = new cliente($this->conexion);
 		$clientes->buscar('BAJA', false);		

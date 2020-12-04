@@ -1,7 +1,9 @@
 <?php
+use Usuario\usuario;
 class proyectoController extends controlador{
 
 	function index($busqueda = ''){
+		if (!usuario::getObj()->getPermiso('admproyecto')) $this->redireccionar('#');
 		$proyectos = $this->modelo;
 		$proyectos->buscar('BAJA', false);
 		$proyectos->buscar('NOMBRE', $busqueda, false, true);

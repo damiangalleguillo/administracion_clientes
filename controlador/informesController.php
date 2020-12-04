@@ -1,8 +1,9 @@
 <?php
-
+use Usuario\usuario;
 class informesController extends controlador{
 
 	function index(){
+		if (!usuario::getObj()->getPermiso('adminformes')) $this->redireccionar('#');
 		$this->proyectosSinFacturar();
 		$this->proyectosPorPeriodo();
 		$this->proyectosPorClienteInformes();

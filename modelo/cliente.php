@@ -152,7 +152,6 @@ class cliente extends dataset{
 			$total += $cliente->getImporteFacturacionTotal();
 		}		
 		
-		//echo $this->getImporteFacturacionTotal().' '.$total;
 		return $total > 0?(int)($this->getImporteFacturacionTotal() * 100 / $total): 0;
 	}
 

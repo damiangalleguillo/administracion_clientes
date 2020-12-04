@@ -6,7 +6,7 @@ use Luecano\NumeroALetras\NumeroALetras;
 
 class impresionesController extends controlador{
 	
-	function index(){		
+	function index(){				
 		$this->setTitulo('Impresiones');
 	}
 	
@@ -127,7 +127,7 @@ class impresionesController extends controlador{
 			$c++;
 			$reporte->Cell(25, 8, $c, 1, 0, 'C');
 			$reporte->Cell(75, 8, $cliente->getNombreCompleto(), 1, 0, 'C');
-			$reporte->Cell(50, 8, $cliente->getProyectosPorc().'%', 1, 0, 'C');
+			$reporte->Cell(50, 8, $cliente->getIngresosPorc().'%', 1, 0, 'C');
 			$reporte->Cell(50, 8, '$'.$cliente->getImporteFacturacionTotal(), 1, 1, 'C');
 		}		
 		$reporte->output('archivo.pdf', 'i');			

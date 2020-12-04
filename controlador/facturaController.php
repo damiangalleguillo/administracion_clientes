@@ -1,7 +1,10 @@
 <?php
+use Usuario\usuario;
 class facturaController extends controlador{
 
 	function index(){
+		if (!usuario::getObj()->getPermiso('admfacturas')) $this->redireccionar('#');
+		
 		$facturas = $this->modelo;
 		$facturas->traerRegistros();
 		
