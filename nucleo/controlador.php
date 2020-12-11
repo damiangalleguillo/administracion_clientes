@@ -47,10 +47,10 @@ abstract class controlador{
 	}
 	
 	private function ejecutarMetodo($clase, $metodo, $parametros = array()) {		
-		if (count($_POST)>0 && (!isset($_POST['_token']) || !usuario::checkToken($_POST['_token']))){
+		/*if (count($_POST)>0 && (!isset($_POST['_token']) || !usuario::checkToken($_POST['_token']))){
 			echo "error de seguridad";
 			die();
-		} 
+		} */
 		
 		$miMetodo = new ReflectionMethod($clase, $metodo);
 		
